@@ -1,4 +1,4 @@
-"# Madison-Park-Scavenger-Hunt
+# Madison-Park-Scavenger-Hunt
 
 Welcome to the Madison Park Scavenger Hunt! This repository includes all the details for the hunt, such as historical locations, stamp placements, QR codes linking to more information, and a cheat sheet for reference. Participants can use the QR codes to learn about Madison Park's rich history while exploring the area.
 
