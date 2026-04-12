@@ -57,7 +57,7 @@ const locations = [
     },
     {
         name: "Western Washington Fairgrounds",
-        stampLocation: "Next to 41st and Newton traffic circle"
+        stampLocation: "Next to 41st and Newton traffic circle",
         specific: "On post in the middle of circle",
         description: "In the 1880s, Judge McGilvra started leasing parts of his estate for summer cottages, transforming Madison Park into a popular resort destination. By the 1890s and into the 1910s, it became a bustling amusement park with bandstands for concerts, promenades for strolling, vaudeville performances, beer gardens, and various waterfront activities. The era came to an abrupt end in 1917 when the Lake Washington Ship Canal lowered the lake level by 9 feet, altering the shoreline and making the resort less viable.",
         lat: 47.6355,
@@ -66,7 +66,7 @@ const locations = [
     },
     {
         name: "Seattle Hustlers ball field",
-        stampLocation: "Next to McGilvra and Newton traffic circle"
+        stampLocation: "Next to McGilvra and Newton traffic circle",
         specific: "On post in the middle of circle",
         description: "Back in 1890, Madison Park hosted Seattle's first ballpark, where the Seattle Hustlers, the Pacific Northwest's first professional baseball team, practiced on a rudimentary diamond. Throughout the 1890s, this field served as a key venue for early organized baseball games before more formal stadiums were constructed in the city.",
         lat: 47.6355,
@@ -84,7 +84,7 @@ const locations = [
     },
     {
         name: "Laurel Shade",
-        stampLocation: "Next to the hydrangas on South side of East Garfield, west of 43rd.
+        stampLocation: "Next to the hydrangas on South side of East Garfield, west of 43rd.",
         specific: "",
         description: "In the 1860s, Judge John J. McGilvra built Laurel Shade at 1500 42nd Ave E, making his family the sole residents of Madison Park until the 1880s. As development began in the 1880s, the area around the estate started to grow into the neighborhood we know today.",
         lat: 47.629,
@@ -139,7 +139,10 @@ function showHint(index) {
 // Render locations
 function renderLocations() {
     const container = document.getElementById('locations');
-    container.innerHTML = '';
+    container.innerHTML = `<div class="game-intro">
+        <h2>Welcome to the Madison Park Scavenger Hunt!</h2>
+        <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
+    </div>`;
     locations.forEach((loc, index) => {
         if (loc.unlocked) {
             const div = document.createElement('div');
