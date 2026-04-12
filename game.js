@@ -5,56 +5,57 @@ const locations = [
         name: "Mosquito fleet",
         stampLocation: "Middle of the dock",
         specific: "tbd",
-        description: "From 1890 to 1910, Madison Park was a key stop for the Mosquito Fleet steamboats plying Lake Washington. Can you figure out where they started from? Hint: Look for a dock.",
+        description: "From 1890 to 1910, Madison Park was a key stop for the Mosquito Fleet steamboats supplying Lake Washington. Can you figure out where they started from? Hint: Look for a dock.",
         lat: 47.637,
         lng: -122.279,
         unlocked: true,
-        answer: "From 1890 to 1910, Madison Park was a key stop for the Mosquito Fleet steamboats plying Lake Washington. This fleet of small steamers provided essential transportation across the lake, connecting communities. The broader service lasted from the early 1880s until 1950, with the Madison Park to Kirkland route ceasing on August 31, 1950, marking the end of an era of water-based commuting.",
-        image: ".img/mosquito_fleet.jpg"
+        answer: "From 1890 to 1910, Madison Park was a key stop for the Mosquito Fleet steamboats cruising Lake Washington. This fleet of small steamers provided essential transportation across the lake, connecting communities. The broader service lasted from the early 1880s until 1950, with the Madison Park to Kirkland route ceasing on August 31, 1950, marking the end of an era of water-based commuting.",
+        image: "img/Mosquito Fleet Ferry.png"
     },
     {
         name: "Cable Car",
         stampLocation: "Next to the Madison Park Beach Rainbow sign",
         specific: "On back of rainbow sign",
-        description: "Cable cars began serving Madison Park in 1890, running from downtown Seattle to the lakefront. The full line operated until around 1910, when service was truncated to 21st Avenue, no longer reaching the park. This transportation innovation helped develop the area as a residential and recreational hub.",
-        lat: 47.636,
+        description: "Cable cars began serving Madison Park in 1890, and the end of the line was at the end of Madison Street, right near the beach. Can you find the rainbow sign and picture yourself waiting for the cable car?",
+        lat: 47.633,
         lng: -122.276,
         unlocked: false,
-        answer: "Cable cars began serving Madison Park in 1890, running from downtown Seattle to the lakefront. The full line operated until around 1910, when service was truncated to 21st Avenue, no longer reaching the park. This transportation innovation helped develop the area as a residential and recreational hub.",
-        image: ""
+        answer: "Cable cars began serving Madison Park in 1890, running from downtown Seattle to the lakefront. The full line operated until around 1910, when service was truncated to 21st Avenue, no longer reaching the park. This transportation innovation helped develop the area as a residential and recreational hub. \n \nFun fact: Did you know that Madison street is the only street that runs from Puget Sound to Lake Washington?",
+        image: "/img/Cable Car.png"
     },
     {
         name: "Bathhouse",
         stampLocation: "Next to the front door of the Bathhouse",
         specific: "tbd",
-        description: "Around 1900-1910, a bathing pavilion and fountain were built at Madison Park, catering to bathers enjoying the lake. As the area evolved from a resort to a neighborhood park in the early 1900s, the bathhouse continued to serve as a community facility for swimming and leisure activities.",
+        description: "Around 1900-1910, a bathing pavilion and fountain were built at Madison Park. Can you find the bathhouse front door?",
         lat: 47.633,
         lng: -122.273,
         unlocked: false,
         answer: "Around 1900-1910, a bathing pavilion and fountain were built at Madison Park, catering to bathers enjoying the lake. As the area evolved from a resort to a neighborhood park in the early 1900s, the bathhouse continued to serve as a community facility for swimming and leisure activities.",
-        image: ""
+        image: "https://images.squarespace-cdn.com/content/v1/642dd723b92b071bb2077590/3553fc3b-be5e-489b-9176-f1945c3d9007/Screenshot+2025-05-13+at+11.41.40+PM.png"
     },
     {
         name: "Pioneer hall",
         stampLocation: "Next to the front door of the Pioneer hall",
         specific: "tbd",
-        description: "Built in 1910 by the Pioneer Association, Pioneer Hall has been a cornerstone of Madison Park's community life. From the 1910s to the present, it has hosted meetings, events, and now serves as the home for the Madison Park Community Council, fostering local engagement and history.",
+        description: "The Pioneer building is an old brick building in Madison Park. Do you know where it is? Hint: It's not the bathhouse.",
         lat: 47.632,
         lng: -122.272,
         unlocked: false,
         answer: "Built in 1910 by the Pioneer Association, Pioneer Hall has been a cornerstone of Madison Park's community life. From the 1910s to the present, it has hosted meetings, events, and now serves as the home for the Madison Park Community Council, fostering local engagement and history.",
-        image: ""
+        image: "https://wapioneers.com/upload/rotator/Home_Image_Landscape/rsz_pioneer_hall_se_view.jpg"
+
     },
     {
         name: "Madison Park Pavillion",
         stampLocation: "Next to the kids play structure",
         specific: "Somewhere on the structure",
-        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows during its peak in the 1890s and 1910s. After the 1917 lake level drop, its use declined as the resort era faded.",
+        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows.  Can you find a structure in the park that resembles the picture?",
         lat: 47.631,
         lng: -122.271,
         unlocked: false,
         answer: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows during its peak in the 1890s and 1910s. After the 1917 lake level drop, its use declined as the resort era faded.",
-        image: ""
+        image: "https://i0.wp.com/pauldorpat.com/wp-content/uploads/2013/12/6.-madison-park-pavilion-then-web-500x327.jpg?resize=474%2C310"
     },
     {
         name: "Duwamish",
@@ -65,43 +66,51 @@ const locations = [
         lng: -122.275,
         unlocked: false,
         answer: "The Duwamish people have inhabited the Seattle area for thousands of years, with Madison Park being a significant site known as \"Where One Chops,\" likely referring to the clearing of land for canoes or other uses. When settlers arrived in the 1850s, the Duwamish were still actively using the area for fishing, hunting, and gathering. However, the 1860s saw Judge John McGilvra acquire the land, leading to the displacement of Indigenous peoples as Seattle expanded.",
-        image: ""
+        image: "img/Mosquito Fleet Ferry.png"
     },
     {
         name: "Western Washington Fairgrounds",
         stampLocation: "Next to 41st and Newton traffic circle",
         specific: "On post in the middle of circle",
-        description: "In the 1880s, Judge McGilvra started leasing parts of his estate for summer cottages, transforming Madison Park into a popular resort destination. By the 1890s and into the 1910s, it became a bustling amusement park with bandstands for concerts, promenades for strolling, vaudeville performances, beer gardens, and various waterfront activities. The era came to an abrupt end in 1917 when the Lake Washington Ship Canal lowered the lake level by 9 feet, altering the shoreline and making the resort less viable.",
+        answer: "In the 1880s, Judge McGilvra started leasing parts of his estate for summer cottages, transforming Madison Park into a popular resort destination. By the 1890s and into the 1910s, it became a bustling amusement park with bandstands for concerts, promenades for strolling, vaudeville performances, beer gardens, and various waterfront activities. The era came to an abrupt end in 1917 when the Lake Washington Ship Canal lowered the lake level by 9 feet, altering the shoreline and making the resort less viable.",
         lat: 47.6355,
         lng: -122.2755,
-        unlocked: false
+        image: "img/Mosquito Fleet Ferry.png",
+        unlocked: false,
+        description: "Madison Park was the original Western Washing Fairgrounds. Homes are now where the field was. To find this clue, find the traffic circle at 41st and Newton. "
     },
     {
         name: "Seattle Hustlers ball field",
         stampLocation: "Next to McGilvra and Newton traffic circle",
         specific: "On post in the middle of circle",
-        description: "Back in 1890, Madison Park hosted Seattle's first ballpark, where the Seattle Hustlers, the Pacific Northwest's first professional baseball team, practiced on a rudimentary diamond. Throughout the 1890s, this field served as a key venue for early organized baseball games before more formal stadiums were constructed in the city.",
+        answer: "Back in 1890, Madison Park hosted Seattle's first ballpark, where the Seattle Hustlers, the Pacific Northwest's first professional baseball team, practiced on a rudimentary diamond. Throughout the 1890s, this field served as a key venue for early organized baseball games before more formal stadiums were constructed in the city.",
         lat: 47.6355,
         lng: -122.2755,
-        unlocked: false
+        image: "img/Mosquito Fleet Ferry.png",
+        unlocked: false,
+        description: "Madison Park had the first professional baseball team. To find this clue, find the traffic circle at McGilvra and Newton. "
     },
     {
         name: "Hyde Place",
         stampLocation: "The center of Hyde Place Park",
         specific: "tbd",
-        description: "This historic home was built in the late 1800s amid the early residential development spurred by McGilvra's land platting. By the early 1900s, it became integrated into the expanding cottage community of Madison Park.",
+        answer: "This historic home was built in the late 1800s amid the early residential development spurred by McGilvra's land platting. By the early 1900s, it became integrated into the expanding cottage community of Madison Park.",
         lat: 47.630,
         lng: -122.270,
-        unlocked: false
+        image: "img/Mosquito Fleet Ferry.png",
+        unlocked: false,
+        description: "Hyde Place is a historic home built in the late 1800s. To find this clue, go to the center of Hyde Place Park."
     },
     {
         name: "Laurel Shade",
         stampLocation: "Next to the hydrangas on South side of East Garfield, west of 43rd.",
         specific: "",
-        description: "In the 1860s, Judge John J. McGilvra built Laurel Shade at 1500 42nd Ave E, making his family the sole residents of Madison Park until the 1880s. As development began in the 1880s, the area around the estate started to grow into the neighborhood we know today.",
+        answer: "In the 1860s, Judge John J. McGilvra built Laurel Shade at 1500 42nd Ave E, making his family the sole residents of Madison Park until the 1880s. As development began in the 1880s, the area around the estate started to grow into the neighborhood we know today.",
         lat: 47.629,
         lng: -122.269,
-        unlocked: false
+        unlocked: false,
+        description: "Laurel Shade was built in the 1860s by Judge John J. McGilvra. To find this clue, go to the hydrangeas on South side of East Garfield, west of 43rd.",
+        image: "img/Mosquito Fleet Ferry.png"
     }
 ];
 
@@ -109,15 +118,18 @@ const locations = [
 function loadProgress() {
     const completed = JSON.parse(localStorage.getItem('scavengerHuntProgress') || '[]');
     locations.forEach((loc, index) => {
-        if (completed.includes(index)) {
-            loc.unlocked = true;
-        }
+        loc.unlocked = false;
     });
-    // Unlock next if previous is completed
-    for (let i = 0; i < locations.length - 1; i++) {
-        if (locations[i].unlocked) {
-            locations[i + 1].unlocked = true;
-        }
+    if (completed.length > 0) {
+        completed.forEach(idx => {
+            if (locations[idx]) locations[idx].unlocked = true;
+        });
+        // Unlock the next question after the highest completed
+        const maxIdx = Math.max(...completed);
+        if (locations[maxIdx + 1]) locations[maxIdx + 1].unlocked = true;
+    } else {
+        // If nothing completed, unlock the first
+        locations[0].unlocked = true;
     }
 }
 
@@ -154,50 +166,91 @@ function renderLocations() {
     container.innerHTML = `<div class="game-intro">
         <h2>Welcome to the Madison Park Scavenger Hunt!</h2>
         <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
+        <label style="display:inline-flex;align-items:center;margin-top:0.5em;gap:0.5em;">
+            <input type="checkbox" id="test-mode-checkbox"> Test mode (auto-match coordinates)
+        </label>
+        <button id="reset-progress-btn" style="margin-left:1em;">Reset Progress</button>
     </div>`;
-        // Only show the first unlocked location
-        let currentIndex = 0;
-        // Find the lowest unlocked index (first question not yet completed)
-        for (let i = 0; i < locations.length; i++) {
-            if (locations[i].unlocked) {
-                currentIndex = i;
-                break;
-            }
+    // Add event listener for reset button
+    setTimeout(() => {
+        const resetBtn = document.getElementById('reset-progress-btn');
+        if (resetBtn) {
+            resetBtn.onclick = () => {
+                localStorage.removeItem('scavengerHuntProgress');
+                loadProgress();
+                renderLocations();
+            };
         }
-        const loc = locations[currentIndex];
-        const div = document.createElement('div');
-        div.className = 'location';
-        div.innerHTML = `
-            <div class="question-row">
-                <div class="question-main">
-                    <h3>${loc.name}</h3>
-                    <p>${loc.description}</p>
-                    <p class="clue-coords">
-                        <strong>Clue coordinates:</strong> ${loc.lat.toFixed ? loc.lat.toFixed(3) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(3) : loc.lng}
-                        &nbsp;|&nbsp;
-                        <span id="your-coords"></span>
-                    </p>
-                </div>
-                <div class="question-image">
-                    ${loc.image ? `<img src="${loc.image}" alt="${loc.name}" />` : ''}
-                </div>
+    }, 0);
+    // Only show the first unlocked location
+    let currentIndex = 0;
+    for (let i = 0; i < locations.length; i++) {
+        if (locations[i].unlocked) {
+            currentIndex = i;
+            break;
+        }
+    }
+    // Always use the current unlocked clue for coordinates
+    const loc = locations[currentIndex];
+    // Clear and re-render the container for the new clue
+    while (container.children.length > 1) {
+        container.removeChild(container.lastChild);
+    }
+    const div = document.createElement('div');
+    div.className = 'location';
+    div.innerHTML = `
+        <div class="question-row">
+            <div class="question-main">
+                <h3>${loc.name}</h3>
+                <p>${loc.description}</p>
             </div>
-            <div class="button-hint-row">
-                <button id="checkin-btn-${currentIndex}" onclick="checkIn(${currentIndex})">Check In</button>
-                <span class="hint-tooltip">
-                    <span class="hint-icon" tabindex="0" onclick="showHint(${currentIndex})" title="I need a hint">&#x2753;</span>
-                </span>
+            <div class="question-image">
+                ${loc.image ? `<img src="${loc.image}" alt="${loc.name}" />` : ''}
             </div>
-            <div id="checkin-result-${currentIndex}" class="checkin-result"></div>
-            <div id="answer-section-${currentIndex}" class="answer-section"></div>
-            <div id="next-section-${currentIndex}"></div>
-            <p id="hint-${currentIndex}" style="display:none;"><strong>Location:</strong> ${loc.stampLocation}</p>
-        `;
-        container.appendChild(div);
+        </div>
+        <div class="button-hint-row">
+            <button id="checkin-btn-${currentIndex}" onclick="checkIn(${currentIndex})">Check In</button>
+            <span class="hint-tooltip">
+                <span class="hint-icon" tabindex="0" onclick="showHint(${currentIndex})" title="I need a hint">&#x2753;</span>
+            </span>
+        </div>
+        <div id="coords-section-${currentIndex}" class="coords-section">
+            <div class="clue-coords-inline">
+                <strong>Clue coordinates:</strong> ${loc.lat.toFixed ? loc.lat.toFixed(3) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(3) : loc.lng}
+                <span id="your-coords" class="your-coords-inline"></span>
+            </div>
+        </div>
+        <div id="checkin-result-${currentIndex}" class="checkin-result"></div>
+        <div id="answer-section-${currentIndex}" class="answer-section"></div>
+        <div id="next-section-${currentIndex}"></div>
+        <p id="hint-${currentIndex}" style="display:none;"><strong>Location:</strong> ${loc.stampLocation}</p>
+    `;
+    container.appendChild(div);
 }
 
 // Check in function
 function checkIn(index) {
+    const testMode = document.getElementById('test-mode-checkbox')?.checked;
+    if (testMode) {
+        // Simulate matching coordinates
+        const loc = locations[index];
+        const userLat3 = loc.lat.toFixed ? Number(loc.lat.toFixed(3)) : Number(loc.lat);
+        const userLng3 = loc.lng.toFixed ? Number(loc.lng.toFixed(3)) : Number(loc.lng);
+        const yourCoordsSpan = document.getElementById('your-coords');
+        if (yourCoordsSpan) {
+            yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat3}, ${userLng3}`;
+        }
+        let msg = '<span style="color:green;">🎉 Success! You found the location.</span>';
+        const resultDiv = document.getElementById(`checkin-result-${index}`);
+        if (resultDiv) resultDiv.innerHTML = msg;
+        const answerDiv = document.getElementById(`answer-section-${index}`);
+        if (answerDiv) answerDiv.innerHTML = `<div class='answer-text'>${loc.answer}</div>`;
+        let nextText = '<div class="next-section-message">Great job! You have completed this clue. Ready for the next one?</div>';
+        nextText += `<button class=\"next-btn\" onclick=\"window.nextClue(${index})\">Next</button>`;
+        const nextDiv = document.getElementById(`next-section-${index}`);
+        if (nextDiv) nextDiv.innerHTML = nextText;
+        return;
+    }
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(position => {
             const userLat = position.coords.latitude;
@@ -209,7 +262,7 @@ function checkIn(index) {
             const clueLat3 = loc.lat.toFixed ? Number(loc.lat.toFixed(3)) : Number(loc.lat);
             const clueLng3 = loc.lng.toFixed ? Number(loc.lng.toFixed(3)) : Number(loc.lng);
             const distance = getDistance(userLat, userLng, loc.lat, loc.lng);
-            // Show your coordinates on the same line as clue coordinates
+            // Show your coordinates below the button
             const yourCoordsSpan = document.getElementById('your-coords');
             if (yourCoordsSpan) {
                 yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat3}, ${userLng3}`;
@@ -228,7 +281,7 @@ function checkIn(index) {
             // On success, show answer and next-section with new text and Next button
             if (success) {
                 const answerDiv = document.getElementById(`answer-section-${index}`);
-                if (answerDiv) answerDiv.innerHTML = `<div class='answer-text'><strong>Answer:</strong> ${loc.answer}</div>`;
+                if (answerDiv) answerDiv.innerHTML = `<div class='answer-text'>${loc.answer}</div>`;
                 let nextText = '<div class="next-section-message">Great job! You have completed this clue. Ready for the next one?</div>';
                 nextText += `<button class=\"next-btn\" onclick=\"window.nextClue(${index})\">Next</button>`;
                 const nextDiv = document.getElementById(`next-section-${index}`);
@@ -236,16 +289,26 @@ function checkIn(index) {
             }
 // Next button handler to unlock and show the next clue
 function nextClue(index) {
-    if (index === 4) { // Pavilion
+    // Mark all as locked, then unlock only the next clue
+    locations.forEach((loc) => {
+        loc.unlocked = false;
+    });
+    // Special logic for Pavilion, Laurel Shade, Hyde Place
+    let unlockIdx = index + 1;
+    if (index === 4) {
         if (confirm("Great job. You have done all the close ones. Do you want to do the advanced areas that require you to walk a mile?")) {
-            locations[9].unlocked = true; // Laurel Shade
+            unlockIdx = 9;
+        } else {
+            unlockIdx = null;
         }
-    } else if (index === 9) { // Laurel Shade
-        locations[8].unlocked = true; // Hyde Place
-    } else if (index === 8) { // Hyde Place
-        locations[5].unlocked = true; // Duwamish
-    } else if (index < locations.length - 1) {
-        locations[index + 1].unlocked = true;
+    } else if (index === 9) {
+        unlockIdx = 8;
+    } else if (index === 8) {
+        unlockIdx = 5;
+    }
+    // Unlock only the next clue
+    if (unlockIdx !== null && unlockIdx < locations.length) {
+        locations[unlockIdx].unlocked = true;
     }
     saveProgress();
     renderLocations();
