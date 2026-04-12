@@ -121,3 +121,26 @@ footer {
 .location button:hover {
     background-color: #2980b9;
 }
+
+/* Hint link */
+
+.hint-link {
+    color: #0074d9;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.hint-link:hover {
+    text-decoration: underline;
+}
+
+
+.location .hint-link {
+    color: #0074d9;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.location .hint-link:hover {
+    text-decoration: underline;
+}
