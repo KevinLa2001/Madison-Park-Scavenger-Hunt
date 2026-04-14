@@ -5,7 +5,7 @@ const locations = [
         name: "Mosquito fleet",
         stampLocation: "Middle of the dock",
         specific: "tbd",
-        description: "From 1890 to 1910, Madison Park was a key stop for the Mosquito Fleet steamboats supplying Lake Washington. Can you figure out where they started from? Hint: Look for a dock.",
+        description: "From 1890 to 1910, Madison Park was a key stop for the Mosquito Fleet steamboats supplying Lake Washington. \nCan you figure out where they started from? \nHint: Look for a dock.",
         lat: 47.637,
         lng: -122.279,
         unlocked: true,
@@ -21,13 +21,13 @@ const locations = [
         lng: -122.276,
         unlocked: false,
         answer: "Cable cars began serving Madison Park in 1890, running from downtown Seattle to the lakefront. The full line operated until around 1910, when service was truncated to 21st Avenue, no longer reaching the park. This transportation innovation helped develop the area as a residential and recreational hub. \n \nFun fact: Did you know that Madison street is the only street that runs from Puget Sound to Lake Washington?",
-        image: "/img/Cable Car.png"
+        image: "https://i0.wp.com/pauldorpat.com/wp-content/uploads/2013/12/5-madison-park-trolley-at-madison-park-a-profile-with-part-of-castleweb1.jpg"
     },
     {
         name: "Bathhouse",
         stampLocation: "Next to the front door of the Bathhouse",
         specific: "tbd",
-        description: "Around 1900-1910, a bathing pavilion and fountain were built at Madison Park. Can you find the bathhouse front door?",
+        description: "Around 1900-1910, a bathing pavilion and fountain were built at Madison Park. Locate the bathhouse front door to unlock this clue.",
         lat: 47.633,
         lng: -122.273,
         unlocked: false,
@@ -38,7 +38,7 @@ const locations = [
         name: "Pioneer hall",
         stampLocation: "Next to the front door of the Pioneer hall",
         specific: "tbd",
-        description: "The Pioneer building is an old brick building in Madison Park. Do you know where it is? Hint: It's not the bathhouse.",
+        description: "The Pioneer building is an old brick building in Madison Park. Do you know where it is? \nHint: It's not the bathhouse. Go to the front door to unlock this clue.",
         lat: 47.632,
         lng: -122.272,
         unlocked: false,
@@ -50,7 +50,7 @@ const locations = [
         name: "Madison Park Pavillion",
         stampLocation: "Next to the kids play structure",
         specific: "Somewhere on the structure",
-        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows.  Can you find a structure in the park that resembles the picture?",
+        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows.  Can you find a structure in the park that resembles the picture? You will need to stand near it.",
         lat: 47.631,
         lng: -122.271,
         unlocked: false,
@@ -61,7 +61,7 @@ const locations = [
         name: "Duwamish",
         stampLocation: "Next to Beaver sanctuary sign",
         specific: "On back of sign.",
-        description: "The Duwamish people have inhabited the Seattle area for thousands of years, with Madison Park being a significant site known as \"Where One Chops,\" likely referring to the clearing of land for canoes or other uses. When settlers arrived in the 1850s, the Duwamish were still actively using the area for fishing, hunting, and gathering. However, the 1860s saw Judge John McGilvra acquire the land, leading to the displacement of Indigenous peoples as Seattle expanded.",
+        description: "The Duwamish people have inhabited the Seattle area for thousands of years. What better way to honor their traditions than take you to the Beaver Sanctuary.",
         lat: 47.635,
         lng: -122.275,
         unlocked: false,
@@ -75,15 +75,15 @@ const locations = [
         answer: "In the 1880s, Judge McGilvra started leasing parts of his estate for summer cottages, transforming Madison Park into a popular resort destination. By the 1890s and into the 1910s, it became a bustling amusement park with bandstands for concerts, promenades for strolling, vaudeville performances, beer gardens, and various waterfront activities. The era came to an abrupt end in 1917 when the Lake Washington Ship Canal lowered the lake level by 9 feet, altering the shoreline and making the resort less viable.",
         lat: 47.6355,
         lng: -122.2755,
-        image: "img/Mosquito Fleet Ferry.png",
+        image: "https://pauldorpat.com/2013/12/29/seattle-now-then-fairgrounds-at-madison-park/",
         unlocked: false,
-        description: "Madison Park was the original Western Washing Fairgrounds. Homes are now where the field was. To find this clue, find the traffic circle at 41st and Newton. "
+        description: "Madison Park was the original Western Washing Fairgrounds. Many homes are now where the field once was. To find this clue, you need to be near the traffic circle at 41st and Newton. "
     },
     {
         name: "Seattle Hustlers ball field",
         stampLocation: "Next to McGilvra and Newton traffic circle",
         specific: "On post in the middle of circle",
-        answer: "Back in 1890, Madison Park hosted Seattle's first ballpark, where the Seattle Hustlers, the Pacific Northwest's first professional baseball team, practiced on a rudimentary diamond. Throughout the 1890s, this field served as a key venue for early organized baseball games before more formal stadiums were constructed in the city.",
+        answer: "Back in 1890, Madison Park hosted Seattle's first ballpark, where the <b>Seattle Hustlers</b>, the Pacific Northwest's first professional baseball team, practiced on a rudimentary diamond. Throughout the 1890s, this field served as a key venue for early organized baseball games before more formal stadiums were constructed in the city.",
         lat: 47.6355,
         lng: -122.2755,
         image: "img/Mosquito Fleet Ferry.png",
@@ -117,8 +117,10 @@ const locations = [
 // Load progress from localStorage
 function loadProgress() {
     const completed = JSON.parse(localStorage.getItem('scavengerHuntProgress') || '[]');
+    const answered = JSON.parse(localStorage.getItem('scavengerHuntAnswers') || '[]');
     locations.forEach((loc, index) => {
         loc.unlocked = false;
+        loc.answered = answered.includes(index);
     });
     if (completed.length > 0) {
         completed.forEach(idx => {
@@ -136,7 +138,9 @@ function loadProgress() {
 // Save progress
 function saveProgress() {
     const completed = locations.map((loc, index) => loc.unlocked ? index : null).filter(i => i !== null);
+    const answered = locations.map((loc, index) => loc.answered ? index : null).filter(i => i !== null);
     localStorage.setItem('scavengerHuntProgress', JSON.stringify(completed));
+    localStorage.setItem('scavengerHuntAnswers', JSON.stringify(answered));
 }
 
 // Haversine formula to calculate distance
@@ -177,6 +181,7 @@ function renderLocations() {
         if (resetBtn) {
             resetBtn.onclick = () => {
                 localStorage.removeItem('scavengerHuntProgress');
+                localStorage.removeItem('scavengerHuntAnswers');
                 loadProgress();
                 renderLocations();
             };
@@ -199,14 +204,20 @@ function renderLocations() {
     const div = document.createElement('div');
     div.className = 'location';
     div.innerHTML = `
-        <div class="question-row">
-            <div class="question-main">
-                <h3>${loc.name}</h3>
-                <p>${loc.description}</p>
+        <div class="question-title"><h3 style="margin:0;">${loc.name}</h3></div>
+        <div class="question-content-box">
+            <div class="question-row">
+                <div class="question-image" style="flex-direction: column; align-items: flex-start;">
+                    ${loc.image ? `<img src="${loc.image}" alt="${loc.name}" />` : ''}
+                    <div class="coords-under-image" title="Clue coordinates: ${loc.lat.toFixed ? loc.lat.toFixed(4) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(4) : loc.lng}" style="font-size:0.98em;color:#555;margin-top:0.3em;cursor:help;">
+                        ${loc.lat.toFixed ? loc.lat.toFixed(4) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(4) : loc.lng}
+                    </div>
+                </div>
+                <div class="question-main">
+                    <p>${loc.description}</p>
+                </div>
             </div>
-            <div class="question-image">
-                ${loc.image ? `<img src="${loc.image}" alt="${loc.name}" />` : ''}
-            </div>
+            ${loc.answered ? `<div class="answer-row"><p class="answer-paragraph">${loc.answer}</p></div>` : ''}
         </div>
         <div class="button-hint-row">
             <button id="checkin-btn-${currentIndex}" onclick="checkIn(${currentIndex})">Check In</button>
@@ -214,9 +225,8 @@ function renderLocations() {
                 <span class="hint-icon" tabindex="0" onclick="showHint(${currentIndex})" title="I need a hint">&#x2753;</span>
             </span>
         </div>
-        <div id="coords-section-${currentIndex}" class="coords-section">
+        <div id="coords-section-${currentIndex}" class="coords-section" style="display:none;">
             <div class="clue-coords-inline">
-                <strong>Clue coordinates:</strong> ${loc.lat.toFixed ? loc.lat.toFixed(3) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(3) : loc.lng}
                 <span id="your-coords" class="your-coords-inline"></span>
             </div>
         </div>
@@ -234,19 +244,21 @@ function checkIn(index) {
     if (testMode) {
         // Simulate matching coordinates
         const loc = locations[index];
-        const userLat3 = loc.lat.toFixed ? Number(loc.lat.toFixed(3)) : Number(loc.lat);
-        const userLng3 = loc.lng.toFixed ? Number(loc.lng.toFixed(3)) : Number(loc.lng);
+        const userLat4 = loc.lat.toFixed ? Number(loc.lat.toFixed(4)) : Number(loc.lat);
+        const userLng4 = loc.lng.toFixed ? Number(loc.lng.toFixed(4)) : Number(loc.lng);
         const yourCoordsSpan = document.getElementById('your-coords');
         if (yourCoordsSpan) {
-            yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat3}, ${userLng3}`;
+            yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat4}, ${userLng4}`;
         }
         let msg = '<span style="color:green;">🎉 Success! You found the location.</span>';
         const resultDiv = document.getElementById(`checkin-result-${index}`);
         if (resultDiv) resultDiv.innerHTML = msg;
-        const answerDiv = document.getElementById(`answer-section-${index}`);
-        if (answerDiv) answerDiv.innerHTML = `<div class='answer-text'>${loc.answer}</div>`;
+        // Mark as answered and re-render
+        locations[index].answered = true;
+        saveProgress();
+        renderLocations();
         let nextText = '<div class="next-section-message">Great job! You have completed this clue. Ready for the next one?</div>';
-        nextText += `<button class=\"next-btn\" onclick=\"window.nextClue(${index})\">Next</button>`;
+        nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
         const nextDiv = document.getElementById(`next-section-${index}`);
         if (nextDiv) nextDiv.innerHTML = nextText;
         return;
@@ -256,20 +268,20 @@ function checkIn(index) {
             const userLat = position.coords.latitude;
             const userLng = position.coords.longitude;
             const loc = locations[index];
-            // Round both user and clue coordinates to 3 decimals for comparison
-            const userLat3 = Number(userLat.toFixed(3));
-            const userLng3 = Number(userLng.toFixed(3));
-            const clueLat3 = loc.lat.toFixed ? Number(loc.lat.toFixed(3)) : Number(loc.lat);
-            const clueLng3 = loc.lng.toFixed ? Number(loc.lng.toFixed(3)) : Number(loc.lng);
+            // Round both user and clue coordinates to 4 decimals for comparison
+            const userLat4 = Number(userLat.toFixed(4));
+            const userLng4 = Number(userLng.toFixed(4));
+            const clueLat4 = loc.lat.toFixed ? Number(loc.lat.toFixed(4)) : Number(loc.lat);
+            const clueLng4 = loc.lng.toFixed ? Number(loc.lng.toFixed(4)) : Number(loc.lng);
             const distance = getDistance(userLat, userLng, loc.lat, loc.lng);
             // Show your coordinates below the button
             const yourCoordsSpan = document.getElementById('your-coords');
             if (yourCoordsSpan) {
-                yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat3}, ${userLng3}`;
+                yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat4}, ${userLng4}`;
             }
             let msg = '';
             let success = false;
-            if (userLat3 === clueLat3 && userLng3 === clueLng3) {
+            if (userLat4 === clueLat4 && userLng4 === clueLng4) {
                 msg += '<span style="color:green;">🎉 Success! You found the location.</span>';
                 success = true;
             } else {
@@ -278,15 +290,26 @@ function checkIn(index) {
             // Show result below the button
             const resultDiv = document.getElementById(`checkin-result-${index}`);
             if (resultDiv) resultDiv.innerHTML = msg;
-            // On success, show answer and next-section with new text and Next button
+            // On success, insert answer as its own row inside .question-content-box, after .question-row
             if (success) {
-                const answerDiv = document.getElementById(`answer-section-${index}`);
-                if (answerDiv) answerDiv.innerHTML = `<div class='answer-text'>${loc.answer}</div>`;
+                locations[index].answered = true;
+                saveProgress();
+                renderLocations();
                 let nextText = '<div class="next-section-message">Great job! You have completed this clue. Ready for the next one?</div>';
-                nextText += `<button class=\"next-btn\" onclick=\"window.nextClue(${index})\">Next</button>`;
+                nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
                 const nextDiv = document.getElementById(`next-section-${index}`);
                 if (nextDiv) nextDiv.innerHTML = nextText;
             }
+        }, () => {
+            const resultDiv = document.getElementById(`checkin-result-${index}`);
+            if (resultDiv) resultDiv.innerHTML = '<span style="color:red;">Unable to get your location. Please enable location services.</span>';
+        });
+    } else {
+        const resultDiv = document.getElementById(`checkin-result-${index}`);
+        if (resultDiv) resultDiv.innerHTML = '<span style="color:red;">Geolocation is not supported by this browser.</span>';
+    }
+}
+
 // Next button handler to unlock and show the next clue
 function nextClue(index) {
     // Mark all as locked, then unlock only the next clue
@@ -314,15 +337,7 @@ function nextClue(index) {
     renderLocations();
 }
 window.nextClue = nextClue;
-        }, () => {
-            const resultDiv = document.getElementById(`checkin-result-${index}`);
-            if (resultDiv) resultDiv.innerHTML = '<span style="color:red;">Unable to get your location. Please enable location services.</span>';
-        });
-    } else {
-        const resultDiv = document.getElementById(`checkin-result-${index}`);
-        if (resultDiv) resultDiv.innerHTML = '<span style="color:red;">Geolocation is not supported by this browser.</span>';
-    }
-}
+// ...existing code...
 
 // Initialize
 loadProgress();
