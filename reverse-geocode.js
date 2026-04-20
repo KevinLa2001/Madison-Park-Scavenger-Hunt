@@ -5,7 +5,22 @@
 
 
 
+
 function addReverseGeocodeButton() {
+    // List of location names from game.js (keep in sync if locations change)
+    const locationNames = [
+        "Mosquito fleet",
+        "Cable Car",
+        "Bathhouse",
+        "Pioneer hall",
+        "Madison Park Pavillion",
+        "Duwamish",
+        "Western Washington Fairgrounds",
+        "Seattle Hustlers ball field",
+        "Hyde Place",
+        "Laurel Shade"
+    ];
+
     // Create button
     const btn = document.createElement('button');
     btn.id = 'reverse-geocode-btn';
@@ -15,12 +30,58 @@ function addReverseGeocodeButton() {
     const resultDiv = document.createElement('div');
     resultDiv.id = 'reverse-geocode-result';
     resultDiv.style.margin = '0.5em 0 1em 0';
-    // Insert at top of #locations if present, else body
+    // Create dropdown for friendly name (initially hidden, shown after location is determined)
+    const dropdownDiv = document.createElement('div');
+    dropdownDiv.style.margin = '1em 0';
+    dropdownDiv.style.display = 'none';
+    const label = document.createElement('label');
+    label.textContent = 'Choose a friendly name: ';
+    label.htmlFor = 'friendly-name-select';
+    const select = document.createElement('select');
+    select.id = 'friendly-name-select';
+    locationNames.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        select.appendChild(opt);
+    });
+    const otherOpt = document.createElement('option');
+    otherOpt.value = '__other__';
+    otherOpt.textContent = 'Other';
+    select.appendChild(otherOpt);
+    label.appendChild(select);
+    dropdownDiv.appendChild(label);
+    // Manual entry for 'Other'
+    const otherInput = document.createElement('input');
+    otherInput.type = 'text';
+    otherInput.placeholder = 'Enter a custom name';
+    otherInput.style.display = 'none';
+    otherInput.style.marginLeft = '1em';
+    dropdownDiv.appendChild(otherInput);
+    // Confirm button
+    const confirmBtn = document.createElement('button');
+    confirmBtn.textContent = 'Confirm';
+    confirmBtn.style.marginLeft = '1em';
+    dropdownDiv.appendChild(confirmBtn);
+
+    // Insert elements
     const container = document.getElementById('locations') || document.body;
     container.insertBefore(btn, container.firstChild);
     container.insertBefore(resultDiv, btn.nextSibling);
+    container.insertBefore(dropdownDiv, resultDiv.nextSibling);
+
+    // Show/hide manual entry if 'Other' is selected
+    select.onchange = function() {
+        if (select.value === '__other__') {
+            otherInput.style.display = '';
+        } else {
+            otherInput.style.display = 'none';
+        }
+    };
 
     btn.onclick = function() {
+        // Start geolocation lookup
+        resultDiv.innerHTML = '';
         if (!navigator.geolocation) {
             setResult('<span style="color:red;">Geolocation is not supported by your browser.</span>');
             return;
@@ -36,6 +97,25 @@ function addReverseGeocodeButton() {
         );
     };
 
+    confirmBtn.onclick = function() {
+        let friendlyName = select.value;
+        if (friendlyName === '__other__') {
+            friendlyName = otherInput.value.trim();
+            if (!friendlyName) {
+                alert('Please enter a custom name.');
+                return;
+            }
+        }
+        dropdownDiv.style.display = 'none';
+        // Update the last result entry to include the friendly name
+        const entries = resultDiv.getElementsByClassName('whereami-entry');
+        if (entries.length > 0) {
+            const lastEntry = entries[entries.length - 1];
+            lastEntry.innerHTML = `<strong>Friendly name:</strong> ${friendlyName}<br>` + lastEntry.innerHTML;
+        }
+    };
+
+
     // Helper to set only the latest result (preserve only the latest lines)
     function setResult(html) {
         // If there is already a result, add a blank line before the new one
@@ -50,7 +130,7 @@ function addReverseGeocodeButton() {
         resultDiv.appendChild(entry);
     }
 
-    // Handle position and fetch address
+    // Handle position and fetch address, then prompt for friendly name
     async function handlePosition(position) {
         const lat = Number(position.coords.latitude.toFixed(4));
         const lng = Number(position.coords.longitude.toFixed(4));
@@ -83,6 +163,11 @@ function addReverseGeocodeButton() {
         } catch (e) {
             setResult(`<strong>Your coordinates:</strong> ${lat}, ${lng}<br><span style=\"color:red;\">Could not determine address.</span>`);
         }
+        // Show the friendly name dropdown after location/address is shown
+        dropdownDiv.style.display = '';
+        select.value = locationNames[0];
+        otherInput.style.display = 'none';
+        otherInput.value = '';
     }
 }
 

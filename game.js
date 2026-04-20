@@ -171,7 +171,7 @@ function renderLocations() {
         <h2>Welcome to the Madison Park Scavenger Hunt!</h2>
         <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
         <label style="display:inline-flex;align-items:center;margin-top:0.5em;gap:0.5em;">
- //           <input type="checkbox" id="test-mode-checkbox"> Test mode (auto-match coordinates)
+ 
         </label>
         <button id="reset-progress-btn" style="margin-left:1em;">Reset Progress</button>
     </div>`;
@@ -238,6 +238,31 @@ function renderLocations() {
     container.appendChild(div);
 }
 
+// Show or update the visual distance indicator
+function updateDistanceIndicator(distance, maxDistance = 500) {
+    const container = document.getElementById('distance-indicator-container');
+    const bar = document.getElementById('distance-indicator');
+    const label = document.getElementById('distance-indicator-label');
+    if (!container || !bar || !label) return;
+    container.style.display = 'block';
+    // Clamp maxDistance to a minimum of 50m for usability
+    maxDistance = Math.max(maxDistance, 50);
+    let value = Math.max(0, maxDistance - distance);
+    value = Math.min(value, maxDistance);
+    bar.max = maxDistance;
+    bar.value = value;
+    if (distance < 1) {
+        label.textContent = 'You are here!';
+    } else {
+        label.textContent = `${Math.round(distance)} meters away`;
+    }
+}
+
+function hideDistanceIndicator() {
+    const container = document.getElementById('distance-indicator-container');
+    if (container) container.style.display = 'none';
+}
+
 // Check in function
 function checkIn(index) {
     const testMode = document.getElementById('test-mode-checkbox')?.checked;
@@ -261,6 +286,7 @@ function checkIn(index) {
         nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
         const nextDiv = document.getElementById(`next-section-${index}`);
         if (nextDiv) nextDiv.innerHTML = nextText;
+        hideDistanceIndicator();
         return;
     }
     if (navigator.geolocation) {
@@ -279,6 +305,7 @@ function checkIn(index) {
             if (yourCoordsSpan) {
                 yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat4}, ${userLng4}`;
             }
+            updateDistanceIndicator(distance);
             let msg = '';
             let success = false;
             if (userLat4 === clueLat4 && userLng4 === clueLng4) {
@@ -299,14 +326,17 @@ function checkIn(index) {
                 nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
                 const nextDiv = document.getElementById(`next-section-${index}`);
                 if (nextDiv) nextDiv.innerHTML = nextText;
+                hideDistanceIndicator();
             }
         }, () => {
             const resultDiv = document.getElementById(`checkin-result-${index}`);
             if (resultDiv) resultDiv.innerHTML = '<span style="color:red;">Unable to get your location. Please enable location services.</span>';
+            hideDistanceIndicator();
         });
     } else {
         const resultDiv = document.getElementById(`checkin-result-${index}`);
         if (resultDiv) resultDiv.innerHTML = '<span style="color:red;">Geolocation is not supported by this browser.</span>';
+        hideDistanceIndicator();
     }
 }
 
