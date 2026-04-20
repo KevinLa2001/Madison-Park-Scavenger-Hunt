@@ -171,7 +171,7 @@ function renderLocations() {
         <h2>Welcome to the Madison Park Scavenger Hunt!</h2>
         <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
         <label style="display:inline-flex;align-items:center;margin-top:0.5em;gap:0.5em;">
-            <input type="checkbox" id="test-mode-checkbox"> Test mode (auto-match coordinates)
+ //           <input type="checkbox" id="test-mode-checkbox"> Test mode (auto-match coordinates)
         </label>
         <button id="reset-progress-btn" style="margin-left:1em;">Reset Progress</button>
     </div>`;
