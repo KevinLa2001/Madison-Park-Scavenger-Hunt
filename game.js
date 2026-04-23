@@ -380,7 +380,7 @@ function checkIn(index) {
             if (yourCoordsSpan) {
                 yourCoordsSpan.innerHTML = `<strong>Your coordinates:</strong> ${userLat4}, ${userLng4}`;
             }
-            updateDistanceIndicator(distance);
+            updateDistanceIndicator(distance, 183); // 200 yards ≈ 183 meters
             let msg = '';
             let success = false;
             if (userLat4 === clueLat4 && userLng4 === clueLng4) {

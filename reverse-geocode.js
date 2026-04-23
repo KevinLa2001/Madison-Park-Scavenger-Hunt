@@ -81,18 +81,38 @@ function addReverseGeocodeButton() {
 
     btn.onclick = function() {
         // Start geolocation lookup
+        // Only clear previous entries, but not the searching GIF if present
         resultDiv.innerHTML = '';
+        let searchingImg = document.createElement('img');
+        searchingImg.src = 'img/searching.gif';
+        searchingImg.alt = 'Searching...';
+        searchingImg.id = 'searching-gif';
+        searchingImg.style.display = 'block';
+        searchingImg.style.margin = '1em auto';
+        resultDiv.appendChild(searchingImg);
         if (!navigator.geolocation) {
             setResult('<span style="color:red;">Geolocation is not supported by your browser.</span>');
+            // Remove searching GIF if present
+            if (searchingImg.parentNode) searchingImg.parentNode.removeChild(searchingImg);
             return;
         }
-        setResult('Getting your location...');
+        // Show a message below the GIF, but do not clear the GIF
+        const msg = document.createElement('div');
+        msg.textContent = 'Getting your location...';
+        msg.style.textAlign = 'center';
+        resultDiv.appendChild(msg);
         navigator.geolocation.getCurrentPosition(
             (position) => {
+                // Remove searching GIF before showing coordinates
+                const gif = document.getElementById('searching-gif');
+                if (gif) gif.parentNode.removeChild(gif);
                 handlePosition(position);
             },
             () => {
                 setResult('<span style="color:red;">Unable to get your location. Please enable location services.</span>');
+                // Remove searching GIF if present
+                const gif = document.getElementById('searching-gif');
+                if (gif) gif.parentNode.removeChild(gif);
             }
         );
     };
