@@ -241,20 +241,90 @@ function renderLocations() {
 // Show or update the visual distance indicator
 function updateDistanceIndicator(distance, maxDistance = 500) {
     const container = document.getElementById('distance-indicator-container');
-    const bar = document.getElementById('distance-indicator');
+    const canvas = document.getElementById('crosshairs-canvas');
     const label = document.getElementById('distance-indicator-label');
-    if (!container || !bar || !label) return;
+    const gpsCoords = document.getElementById('gps-coords');
+    if (!container || !canvas || !label || !gpsCoords) return;
     container.style.display = 'block';
     // Clamp maxDistance to a minimum of 50m for usability
     maxDistance = Math.max(maxDistance, 50);
-    let value = Math.max(0, maxDistance - distance);
-    value = Math.min(value, maxDistance);
-    bar.max = maxDistance;
-    bar.value = value;
+
+    // Draw cross-hairs and blip
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Draw cross-hairs
+    ctx.strokeStyle = '#888';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(canvas.width/2, 0);
+    ctx.lineTo(canvas.width/2, canvas.height);
+    ctx.moveTo(0, canvas.height/2);
+    ctx.lineTo(canvas.width, canvas.height/2);
+    ctx.stroke();
+    // Draw center target
+    ctx.beginPath();
+    ctx.arc(canvas.width/2, canvas.height/2, 8, 0, 2*Math.PI);
+    ctx.strokeStyle = '#217dbb';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.fillStyle = '#3498db';
+    ctx.globalAlpha = 0.15;
+    ctx.beginPath();
+    ctx.arc(canvas.width/2, canvas.height/2, 16, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.globalAlpha = 1;
+
+    // Calculate blip position (user relative to target)
+    // Use global vars for userLat/userLng and targetLat/targetLng if available
+    let userLat = window._userLat, userLng = window._userLng, targetLat = window._targetLat, targetLng = window._targetLng;
+    if (typeof userLat === 'number' && typeof userLng === 'number' && typeof targetLat === 'number' && typeof targetLng === 'number') {
+        // Calculate N/S and E/W offset in meters
+        const dLat = (userLat - targetLat) * 111320; // meters per degree latitude
+        const dLng = (userLng - targetLng) * (40075000 * Math.cos(targetLat * Math.PI/180) / 360); // meters per degree longitude
+        // Clamp to maxDistance for display
+        const maxRadius = 80; // px
+        let dx = dLng, dy = -dLat; // y axis: north is up
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist > maxDistance) {
+            dx *= maxDistance/dist;
+            dy *= maxDistance/dist;
+        }
+        // Scale to canvas
+        const scale = maxRadius / maxDistance;
+        const px = canvas.width/2 + dx * scale;
+        const py = canvas.height/2 + dy * scale;
+        // Draw blip
+        ctx.beginPath();
+        ctx.arc(px, py, 7, 0, 2*Math.PI);
+        ctx.fillStyle = '#e74c3c';
+        ctx.globalAlpha = 0.85;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.strokeStyle = '#c0392b';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        // Draw a line from center to blip
+        ctx.beginPath();
+        ctx.moveTo(canvas.width/2, canvas.height/2);
+        ctx.lineTo(px, py);
+        ctx.strokeStyle = '#e74c3c';
+        ctx.lineWidth = 1.2;
+        ctx.setLineDash([4,3]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+    }
+
+    // Label
     if (distance < 1) {
         label.textContent = 'You are here!';
     } else {
         label.textContent = `${Math.round(distance)} meters away`;
+    }
+    // Show GPS coords if available
+    if (typeof userLat === 'number' && typeof userLng === 'number') {
+        gpsCoords.textContent = `Your coordinates: ${userLat.toFixed(5)}, ${userLng.toFixed(5)}`;
+    } else {
+        gpsCoords.textContent = '';
     }
 }
 
@@ -294,6 +364,11 @@ function checkIn(index) {
             const userLat = position.coords.latitude;
             const userLng = position.coords.longitude;
             const loc = locations[index];
+            // Store for cross-hairs
+            window._userLat = userLat;
+            window._userLng = userLng;
+            window._targetLat = loc.lat;
+            window._targetLng = loc.lng;
             // Round both user and clue coordinates to 4 decimals for comparison
             const userLat4 = Number(userLat.toFixed(4));
             const userLng4 = Number(userLng.toFixed(4));

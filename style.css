@@ -1,3 +1,10 @@
+/* Cross-hairs canvas styling */
+#crosshairs-canvas {
+    background: #fafdff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+    margin-bottom: 0.3em;
+}
 .question-content-box {
     border: 2px solid #3498db;
     border-radius: 10px;
@@ -33,10 +40,20 @@
 }
 /* Layout for question row with image */
 .question-row {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 0;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1.2em;
+}
+
+@media (max-width: 600px) {
+    .question-row {
+        flex-direction: column;
+        gap: 0.7em;
+    }
+    .question-image img {
+        margin-bottom: 0.5em;
+    }
 }
 .question-title {
     width: 100%;
