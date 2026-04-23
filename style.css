@@ -1,9 +1,21 @@
 /* Cross-hairs canvas styling */
 #crosshairs-canvas {
-    background: #fafdff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(52,152,219,0.08);
-    margin-bottom: 0.3em;
+        background: #fafdff;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(52,152,219,0.08);
+        margin-bottom: 0.3em;
+        width: 100%;
+        max-width: 260px;
+        height: auto;
+        display: block;
+}
+
+@media (max-width: 600px) {
+    #crosshairs-canvas {
+        max-width: 98vw;
+        min-width: 160px;
+        height: auto;
+    }
 }
 .question-content-box {
     border: 2px solid #3498db;
