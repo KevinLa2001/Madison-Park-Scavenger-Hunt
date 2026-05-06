@@ -1,3 +1,21 @@
+/* Purple bold W for UW direction */
+.uw-purple-w {
+    color: #4B2E83; /* UW purple */
+    font-weight: bold;
+    font-family: 'Arial Black', Arial, sans-serif;
+    font-size: 1.2em;
+}
+/* Strong blur for secret image */
+.blurred-image {
+    filter: blur(18px); /* ~90% blur visually */
+    -webkit-filter: blur(18px);
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.3s;
+    max-width: 220px;
+    margin: 1em auto;
+    display: block;
+}
 /* Cross-hairs canvas styling */
 #crosshairs-canvas {
         background: #fafdff;

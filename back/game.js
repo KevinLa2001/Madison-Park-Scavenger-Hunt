@@ -167,32 +167,13 @@ function showHint(index) {
 // Render locations
 function renderLocations() {
     const container = document.getElementById('locations');
-    // Calculate blur based on answered questions
-    const totalClues = locations.length;
-    const completedClues = locations.filter(l => l.answered).length;
-    // 18px blur at start, 0px at all answered, step down per clue
-    let blurPx = 18;
-    if (completedClues > 0) {
-        blurPx = 18 - Math.floor((completedClues) * (18 / 5));
-        if (blurPx < 0) blurPx = 0;
-    }
-    container.innerHTML = `<div class="game-intro" style="display:flex;align-items:center;gap:2em;">
-        <div style="flex:1 1 0;min-width:0;">
-            <h2>Welcome to the Madison Park Scavenger Hunt!</h2>
-            <p>Madison Park has a fascinating history—full of surprises, fun, and a few secrets! For example, did you know that once an exotic animal roamed our streets? Can you guess what it was?</p>
-            <p style="margin:0;"><em>To find out what it is, you must finish this scavenger hunt and we will reveal the secret!</em></p>
-            <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
-            <label style="display:inline-flex;align-items:center;margin-top:0.5em;gap:0.5em;"></label>
-            <button id="reset-progress-btn" style="margin-left:1em;">Reset Progress</button>
-            <!-- TEST MODE BUTTON: Remove or comment out for production -->
-            <button id="test-mode-btn" style="margin-left:1em;">Enable Test Mode</button>
-            <label id="test-mode-label" style="display:none;margin-left:1em;font-weight:bold;">
-                <input type="checkbox" id="test-mode-checkbox"> Test Mode: Instantly check in
-            </label>
-        </div>
-        <div style="flex:0 0 auto;display:flex;align-items:center;">
-            <img src="img/Queenie.png" alt="Secret animal" width="140" height="120" style="display:inline-block;vertical-align:middle;filter: blur(${blurPx}px); -webkit-filter: blur(${blurPx}px); transition: filter 0.3s; pointer-events:none; user-select:none; background:#fff; border:2px solid #217dbb;" />
-        </div>
+    container.innerHTML = `<div class="game-intro">
+        <h2>Welcome to the Madison Park Scavenger Hunt!</h2>
+        <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
+        <label style="display:inline-flex;align-items:center;margin-top:0.5em;gap:0.5em;">
+ 
+        </label>
+        <button id="reset-progress-btn" style="margin-left:1em;">Reset Progress</button>
     </div>`;
     // Add event listener for reset button
     setTimeout(() => {
@@ -203,14 +184,6 @@ function renderLocations() {
                 localStorage.removeItem('scavengerHuntAnswers');
                 loadProgress();
                 renderLocations();
-            };
-        }
-        // TEST MODE BUTTON LOGIC: Remove or comment out for production
-        const testBtn = document.getElementById('test-mode-btn');
-        const testLabel = document.getElementById('test-mode-label');
-        if (testBtn && testLabel) {
-            testBtn.onclick = () => {
-                testLabel.style.display = testLabel.style.display === 'none' ? '' : 'none';
             };
         }
     }, 0);
@@ -230,8 +203,6 @@ function renderLocations() {
     }
     const div = document.createElement('div');
     div.className = 'location';
-    // Queenie image is now only shown in the congratulations/next section, not here
-    let queenieImgHtml = '';
     div.innerHTML = `
         <div class="question-title"><h3 style="margin:0;">${loc.name}</h3></div>
         <div class="question-content-box">
@@ -242,10 +213,9 @@ function renderLocations() {
                         ${loc.lat.toFixed ? loc.lat.toFixed(4) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(4) : loc.lng}
                     </div>
                 </div>
-                <div class="question-main" style="display:flex;align-items:center;">
-                    <p style="margin-right:1em;">${loc.description}</p>
+                <div class="question-main">
+                    <p>${loc.description}</p>
                 </div>
-                <div class="queenie-image-container" style="display:inline-block;vertical-align:middle;margin-left:1em;">${queenieImgHtml}</div>
             </div>
             ${loc.answered ? `<div class="answer-row"><p class="answer-paragraph">${loc.answer}</p></div>` : ''}
         </div>
@@ -382,12 +352,7 @@ function checkIn(index) {
         locations[index].answered = true;
         saveProgress();
         renderLocations();
-
-
-
-
-        
-        let nextText = '<div class="next-section-message">Great job! You have completed this clue.<br>Have you figured out which animal was roaming our streets? Ready for the next one?</div>';
+        let nextText = '<div class="next-section-message">Great job! You have completed this clue. Ready for the next one?</div>';
         nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
         const nextDiv = document.getElementById(`next-section-${index}`);
         if (nextDiv) nextDiv.innerHTML = nextText;
@@ -423,43 +388,7 @@ function checkIn(index) {
                 msg += '<span style="color:green;">🎉 Success! You found the location.</span>';
                 success = true;
             } else {
-                // Calculate direction
-                const dLat = loc.lat - userLat;
-                const dLng = loc.lng - userLng;
-                // Convert to degrees
-                const angle = Math.atan2(dLng, dLat) * 180 / Math.PI;
-                // Map angle to compass direction
-                const directions = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-                let idx = Math.round(((angle + 360) % 360) / 45) % 8;
-                let direction = directions[idx];
-                // Icon and hint for each direction
-                const directionIcons = {
-                    'N': '<span class="uw-purple-w">W</span>', // UW (Purple bold W)
-                    'NE': '🧭',
-                    'E': '🌊', // Water
-                    'SE': '🧭',
-                    'S': '🏔️', // Mount Rainier
-                    'SW': '🧭',
-                    'W': '🦀', // Puget Sound (Crab)
-                    'NW': '🧭'
-                };
-                const directionHints = {
-                    'N': '🎓 Move N towards UW...',
-                    'NE': 'Move kind of NE, towards UW and the water.',
-                    'E': '🌊 Move E towards the water...',
-                    'SE': 'Move kind of SE, towards the water and Mount Rainier.',
-                    'S': '🏔️ Move S towards Mount Rainier...',
-                    'SW': 'Move kind of SW, towards Mount Rainier and Seattle/Puget Sound.',
-                    'W': '🌆 Move W towards Seattle and Puget Sound...',
-                    'NW': 'Move kind of NW, towards Puget Sound and UW.'
-                };
-                let icon = directionIcons[direction] || '';
-                let extraHint = directionHints[direction] ? directionHints[direction] : '';
-                if (["NE","SE","SW","NW"].includes(direction)) {
-                    msg += `<span style=\"color:red;\">Not quite there yet. Try getting closer!<br>Distance: ${Math.round(distance)} meters. <b>${icon}</b> ${extraHint}</span>`;
-                } else {
-                    msg += `<span style=\"color:red;\">Not quite there yet. Try getting closer!<br>Distance: ${Math.round(distance)} meters. ${extraHint}</span>`;
-                }
+                msg += `<span style="color:red;">Not quite there yet. Distance: ${Math.round(distance)} meters. Try getting closer!</span>`;
             }
             // Show result below the button
             const resultDiv = document.getElementById(`checkin-result-${index}`);
@@ -469,20 +398,8 @@ function checkIn(index) {
                 locations[index].answered = true;
                 saveProgress();
                 renderLocations();
-                // Always show the Queenie image after the first clue is completed, next to the congratulatory message
-                const totalClues = locations.length;
-                const completedClues = locations.filter(l => l.answered).length;
-                let blurPx;
-                let isPavilion = index === 4;
-                let queenieBlur = isPavilion ? 0 : (completedClues === 1 ? 18 : Math.max(0, 18 - Math.floor((completedClues - 1) * (18 / 4))));
-                let queenieImgHtml = `
-                    <div style="display:flex;flex-direction:column;align-items:center;">
-                        <img src="img/Queenie.png" alt="Secret animal" style="filter: blur(${queenieBlur}px); -webkit-filter: blur(${queenieBlur}px); pointer-events: none; user-select: none; width: 140px; height: 120px; display:inline-block; transition: filter 0.3s; vertical-align:middle; border: 2px solid #217dbb; background: #fff; margin-left: 1em;" />
-                        <div style="margin-top:0.5em;font-size:1.1em;font-weight:bold;color:#217dbb;text-align:center;">Who am I?</div>
-                    </div>
-                `;
-                let nextText = '';
-
+                let nextText = '<div class="next-section-message">Great job! You have completed this clue. Ready for the next one?</div>';
+                nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
                 const nextDiv = document.getElementById(`next-section-${index}`);
                 if (nextDiv) nextDiv.innerHTML = nextText;
                 hideDistanceIndicator();
@@ -501,11 +418,6 @@ function checkIn(index) {
 
 // Next button handler to unlock and show the next clue
 function nextClue(index) {
-    // If this is the last clue, go to Queenie page
-    if (index === locations.length - 1) {
-        window.location.href = 'queenie.html';
-        return;
-    }
     // Mark all as locked, then unlock only the next clue
     locations.forEach((loc) => {
         loc.unlocked = false;
