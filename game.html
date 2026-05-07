@@ -14,8 +14,16 @@
     <main id="game">
         <div id="locations"></div>
         <div id="distance-indicator-container" style="display:none;margin:1em 0;">
-            <div style="display:flex;flex-direction:column;align-items:center;gap:0.5em;">
-                <canvas id="crosshairs-canvas" width="200" height="200" style="border:1px solid #888;background:#fafdff;"></canvas>
+            <div class="compass-queenie-row align-left">
+                <div class="compass-queenie-flex align-left" style="flex:1;">
+                    <canvas id="crosshairs-canvas" width="140" height="140" style="border:1px solid #888;background:#fafdff;"></canvas>
+                </div>
+                <div class="queenie-far-right">
+                    <img id="queenie-blur-img" src="img/Queenie.png" alt="Secret animal" class="blurred-image" style="width:140px;height:120px;filter: blur(18px);" />
+                    <span style="margin-top:0.4em;font-size:1.1em;font-weight:bold;color:#217dbb;text-align:center;display:block;">Who am I?</span>
+                </div>
+            </div>
+            <div class="compass-labels-under" style="display:flex;flex-direction:column;align-items:flex-start;margin-left:0.2em;margin-top:0.5em;">
                 <span id="distance-indicator-label" style="min-width:120px;display:inline-block;"></span>
                 <span id="gps-coords" style="font-size:0.98em;color:#555;"></span>
             </div>

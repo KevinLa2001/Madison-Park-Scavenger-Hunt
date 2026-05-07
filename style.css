@@ -1,3 +1,105 @@
+.checkin-btn.disabled, .checkin-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+/* Check In button styled like Next */
+.checkin-btn {
+    margin-top: 0.7em;
+    padding: 0.5em 1.2em;
+    font-size: 1em;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.checkin-btn:hover {
+    background: #217dbb;
+}
+/* Reset button next to hint icon */
+.reset-question-btn {
+    font-size: 1em;
+    padding: 0.2em 0.8em;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: 0.3em;
+}
+.reset-question-btn:hover {
+    background: #c0392b;
+}
+/* Queenie image and label far right */
+.queenie-far-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: auto;
+    min-width: 150px;
+}
+/* Distance and coordinates labels under compass */
+.compass-labels-under {
+    margin-left: 0.2em;
+    margin-top: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+/* Compass and Queenie row styling */
+.compass-queenie-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1.5em;
+}
+.compass-queenie-flex {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5em;
+}
+.align-left {
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+}
+#queenie-blur-img.blurred-image {
+    width: 140px;
+    height: 120px;
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    filter: blur(18px);
+    -webkit-filter: blur(18px);
+    pointer-events: none;
+    user-select: none;
+    background: #fff;
+    border: 2px solid #217dbb;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0002;
+    transition: filter 0.3s;
+}
+/* Hidden but clickable button on question title bar */
+.hidden-action-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0;
+}
 /* Purple bold W for UW direction */
 .uw-purple-w {
     color: #4B2E83; /* UW purple */
@@ -27,7 +129,21 @@
         height: auto;
         display: block;
 }
-
+/* Reset button next to hint icon */
+.reset-question-btn {
+    font-size: 1em;
+    padding: 0.2em 0.8em;
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: 0.3em;
+}
+.reset-question-btn:hover {
+    background: #c0392b;
+}
 @media (max-width: 600px) {
     #crosshairs-canvas {
         max-width: 98vw;
@@ -89,7 +205,7 @@
     width: 100%;
     box-sizing: border-box;
     padding: 0.5em 1.2em;
-    background: linear-gradient(90deg, #3498db 0%, #217dbb 100%);
+        /* background is set inline for dynamic color */
     color: #fff;
     border-radius: 8px 8px 0 0;
     margin-bottom: 0.5em;
@@ -166,24 +282,72 @@
     font-size: 1.05em;
 }
 /* Button and hint icon on same line */
+
 .button-hint-row {
     display: flex;
     align-items: center;
     margin-top: 0.5em;
+    gap: 0.7em;
     justify-content: space-between;
+}
+
+.right-btn-group {
+    display: flex;
+    align-items: center;
+    gap: 0.7em;
+    margin-left: auto;
+}
+
+.uniform-btn-row > button,
+.uniform-btn-row > .hint-icon {
+    height: 2.7em;
+    min-width: 2.7em;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.reset-question-btn {
+    font-size: 1em;
+    padding: 0.5em 1.2em;
+    background: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: 0;
+    height: 2.7em;
+    min-width: 2.7em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.reset-question-btn:hover {
+    background: #217dbb;
 }
 
 .hint-icon {
     cursor: pointer;
-    font-size: 1.3em;
+    font-size: 1em;
     margin-left: 0.3em;
-    color: #3498db;
-    border-radius: 50%;
-    padding: 0.1em 0.4em;
+    color: #fff !important;
+    background: #3498db;
+    border-radius: 5px;
+    padding: 0.5em 1.2em;
+    border: none;
     transition: background 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: 0 1px 2px #217dbb, 0 0 2px #217dbb;
 }
 .hint-icon:hover, .hint-icon:focus {
-    background: #eaf6fb;
+    background: #217dbb;
     outline: none;
 }
 body {

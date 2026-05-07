@@ -56,6 +56,61 @@ const locations = [
         unlocked: false,
         answer: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows during its peak in the 1890s and 1910s. After the 1917 lake level drop, its use declined as the resort era faded.",
         image: "https://i0.wp.com/pauldorpat.com/wp-content/uploads/2013/12/6.-madison-park-pavilion-then-web-500x327.jpg?resize=474%2C310"
+    },
+    {
+        name: "Duwamish",
+        stampLocation: "Next to Beaver sanctuary sign",
+        specific: "On back of sign.",
+        description: "The Duwamish people have inhabited the Seattle area for thousands of years. What better way to honor their traditions than take you to the Beaver Sanctuary.",
+        lat: 47.635,
+        lng: -122.275,
+        unlocked: false,
+        answer: "The Duwamish people have inhabited the Seattle area for thousands of years, with Madison Park being a significant site known as \"Where One Chops,\" likely referring to the clearing of land for canoes or other uses. When settlers arrived in the 1850s, the Duwamish were still actively using the area for fishing, hunting, and gathering. However, the 1860s saw Judge John McGilvra acquire the land, leading to the displacement of Indigenous peoples as Seattle expanded.",
+        image: "img/Mosquito Fleet Ferry.png"
+    },
+    {
+        name: "Western Washington Fairgrounds",
+        stampLocation: "Next to 41st and Newton traffic circle",
+        specific: "On post in the middle of circle",
+        answer: "In the 1880s, Judge McGilvra started leasing parts of his estate for summer cottages, transforming Madison Park into a popular resort destination. By the 1890s and into the 1910s, it became a bustling amusement park with bandstands for concerts, promenades for strolling, vaudeville performances, beer gardens, and various waterfront activities. The era came to an abrupt end in 1917 when the Lake Washington Ship Canal lowered the lake level by 9 feet, altering the shoreline and making the resort less viable.",
+        lat: 47.6355,
+        lng: -122.2755,
+        image: "https://pauldorpat.com/2013/12/29/seattle-now-then-fairgrounds-at-madison-park/",
+        unlocked: false,
+        description: "Madison Park was the original Western Washing Fairgrounds. Many homes are now where the field once was. To find this clue, you need to be near the traffic circle at 41st and Newton. "
+    },
+    {
+        name: "Seattle Hustlers ball field",
+        stampLocation: "Next to McGilvra and Newton traffic circle",
+        specific: "On post in the middle of circle",
+        answer: "Back in 1890, Madison Park hosted Seattle's first ballpark, where the <b>Seattle Hustlers</b>, the Pacific Northwest's first professional baseball team, practiced on a rudimentary diamond. Throughout the 1890s, this field served as a key venue for early organized baseball games before more formal stadiums were constructed in the city.",
+        lat: 47.6355,
+        lng: -122.2755,
+        image: "img/Mosquito Fleet Ferry.png",
+        unlocked: false,
+        description: "Madison Park had the first professional baseball team. To find this clue, find the traffic circle at McGilvra and Newton. "
+    },
+    {
+        name: "Hyde Place",
+        stampLocation: "The center of Hyde Place Park",
+        specific: "tbd",
+        answer: "This historic home was built in the late 1800s amid the early residential development spurred by McGilvra's land platting. By the early 1900s, it became integrated into the expanding cottage community of Madison Park.",
+        lat: 47.630,
+        lng: -122.270,
+        image: "img/Mosquito Fleet Ferry.png",
+        unlocked: false,
+        description: "Hyde Place is a historic home built in the late 1800s. To find this clue, go to the center of Hyde Place Park."
+    },
+    {
+        name: "Laurel Shade",
+        stampLocation: "Next to the hydrangas on South side of East Garfield, west of 43rd.",
+        specific: "",
+        answer: "In the 1860s, Judge John J. McGilvra built Laurel Shade at 1500 42nd Ave E, making his family the sole residents of Madison Park until the 1880s. As development began in the 1880s, the area around the estate started to grow into the neighborhood we know today.",
+        lat: 47.629,
+        lng: -122.269,
+        unlocked: false,
+        description: "Laurel Shade was built in the 1860s by Judge John J. McGilvra. To find this clue, go to the hydrangeas on South side of East Garfield, west of 43rd.",
+        image: "img/Mosquito Fleet Ferry.png"
     }
 ];
 
@@ -86,6 +141,10 @@ function saveProgress() {
     const answered = locations.map((loc, index) => loc.answered ? index : null).filter(i => i !== null);
     localStorage.setItem('scavengerHuntProgress', JSON.stringify(completed));
     localStorage.setItem('scavengerHuntAnswers', JSON.stringify(answered));
+    // Update Queenie blur image if present
+    if (typeof window.updateQueenieBlur === 'function') {
+        window.updateQueenieBlur();
+    }
 }
 
 // Haversine formula to calculate distance
@@ -121,16 +180,56 @@ function renderLocations() {
         blurPx = 18 - Math.floor((completedClues) * (18 / 5));
         if (blurPx < 0) blurPx = 0;
     }
-    container.innerHTML = `<div class="game-intro" style="display:flex;align-items:center;gap:2em;">
-        <div style="flex:1 1 0;min-width:0;">
-            <label style="display:inline-flex;align-items:center;margin-top:0.5em;gap:0.5em;"></label>
-            <!-- TEST MODE BUTTON: Remove or comment out for production -->
-            <button id="test-mode-btn" style="margin-left:1em;">Enable Test Mode</button>
-            <label id="test-mode-label" style="display:none;margin-left:1em;font-weight:bold;">
-                <input type="checkbox" id="test-mode-checkbox"> Test Mode: Instantly check in
-            </label>
-        </div>
-    </div>`;
+    const started = localStorage.getItem('scavengerHuntStarted') === 'true';
+    if (!started && completedClues === 0) {
+        container.innerHTML = `<div class="game-intro" style="display:flex;align-items:center;gap:2em;">
+            <div style="flex:1 1 0;min-width:0;">
+                <h2>Welcome to the Madison Park Scavenger Hunt!</h2>
+                <p>Madison Park has a fascinating history—full of surprises, fun, and a few secrets! For example, did you know that once an exotic animal roamed our streets? Can you guess what it was?</p>
+                <p style="margin:0;"><em>To find out what it is, you must finish this scavenger hunt and we will reveal the secret!</em></p>
+                <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
+                <div style="margin:1em 0 0.5em 0;font-weight:bold;">Would you like to try?</div>
+                <button id="start-hunt-btn" style="margin-top:0.5em;font-size:1.1em;padding:0.5em 1.5em;">Yes</button>
+                <button id="reset-progress-btn" style="margin-left:1em;">Reset Progress</button>
+                <!-- TEST MODE BUTTON: Remove or comment out for production -->
+                <button id="test-mode-btn" style="margin-left:1em;">Enable Test Mode</button>
+                <label id="test-mode-label" style="display:none;margin-left:1em;font-weight:bold;">
+                    <input type="checkbox" id="test-mode-checkbox"> Test Mode: Instantly check in
+                </label>
+            </div>
+            <div style="flex:0 0 auto;display:flex;align-items:center;">
+                <img src="img/Queenie.png" alt="Secret animal" width="140" height="120" style="display:inline-block;vertical-align:middle;filter: blur(${blurPx}px); -webkit-filter: blur(${blurPx}px); transition: filter 0.3s; pointer-events:none; user-select:none; background:#fff; border:4px solid #217dbb; border-radius:12px; box-shadow:0 2px 8px #0002;" />
+            </div>
+        </div>`;
+        setTimeout(() => {
+            const startBtn = document.getElementById('start-hunt-btn');
+            if (startBtn) {
+                startBtn.onclick = () => {
+                    localStorage.setItem('scavengerHuntStarted', 'true');
+                    renderLocations();
+                };
+            }
+            const resetBtn = document.getElementById('reset-progress-btn');
+            if (resetBtn) {
+                resetBtn.onclick = () => {
+                    localStorage.removeItem('scavengerHuntProgress');
+                    localStorage.removeItem('scavengerHuntAnswers');
+                    localStorage.removeItem('scavengerHuntStarted');
+                    loadProgress();
+                    renderLocations();
+                };
+            }
+            // TEST MODE BUTTON LOGIC: Remove or comment out for production
+            const testBtn = document.getElementById('test-mode-btn');
+            const testLabel = document.getElementById('test-mode-label');
+            if (testBtn && testLabel) {
+                testBtn.onclick = () => {
+                    testLabel.style.display = testLabel.style.display === 'none' ? '' : 'none';
+                };
+            }
+        }, 0);
+        return;
+    }
     // Add event listener for reset button
     setTimeout(() => {
         const resetBtn = document.getElementById('reset-progress-btn');
@@ -138,6 +237,7 @@ function renderLocations() {
             resetBtn.onclick = () => {
                 localStorage.removeItem('scavengerHuntProgress');
                 localStorage.removeItem('scavengerHuntAnswers');
+                localStorage.removeItem('scavengerHuntStarted');
                 loadProgress();
                 renderLocations();
             };
@@ -148,7 +248,7 @@ function renderLocations() {
         if (testBtn && testLabel) {
             testBtn.onclick = () => {
                 testLabel.style.display = testLabel.style.display === 'none' ? '' : 'none';
-            };
+            };""
         }
     }, 0);
     // Only show the first unlocked location
@@ -162,21 +262,19 @@ function renderLocations() {
     // Always use the current unlocked clue for coordinates
     const loc = locations[currentIndex];
     // Clear and re-render the container for the new clue
-    while (container.children.length > 1) {
-        container.removeChild(container.lastChild);
-    }
+    container.innerHTML = "";
     const div = document.createElement('div');
     div.className = 'location';
     // Queenie image is now only shown in the congratulations/next section, not here
-    let queenieBlur = blurPx;
     let queenieImgHtml = '';
+    // Build the question box HTML
     div.innerHTML = `
-        <div class="question-title" style="background: linear-gradient(90deg, #3498db 0%, #217dbb 100%); color: #fff;"><h3 style="margin:0;">${loc.name}</h3></div>
+        <div class="question-title"><h3 style="margin:0;">${loc.name}</h3></div>
         <div class="question-content-box">
             <div class="question-row">
-                <div class="question-image" style="flex-direction: column; align-items: flex-start; color: #fff;">
+                <div class="question-image" style="flex-direction: column; align-items: flex-start;">
                     ${loc.image ? `<img src="${loc.image}" alt="${loc.name}" />` : ''}
-                    <div class="coords-under-image" title="Clue coordinates: ${loc.lat.toFixed ? loc.lat.toFixed(4) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(4) : loc.lng}" style="font-size:0.98em;margin-top:0.3em;cursor:help;">
+                    <div class="coords-under-image" title="Clue coordinates: ${loc.lat.toFixed ? loc.lat.toFixed(4) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(4) : loc.lng}" style="font-size:0.98em;color:#555;margin-top:0.3em;cursor:help;">
                         ${loc.lat.toFixed ? loc.lat.toFixed(4) : loc.lat}, ${loc.lng.toFixed ? loc.lng.toFixed(4) : loc.lng}
                     </div>
                 </div>
@@ -187,14 +285,12 @@ function renderLocations() {
             </div>
             ${loc.answered ? `<div class="answer-row"><p class="answer-paragraph">${loc.answer}</p></div>` : ''}
         </div>
-        <div class="button-hint-row uniform-btn-row">
-            <button id="checkin-btn-${currentIndex}" class="checkin-btn${loc.answered ? ' disabled' : ''}" onclick="checkIn(${currentIndex})"${loc.answered ? ' disabled' : ''}>Check In</button>
-            <div class="right-btn-group">
-                <button id="reset-progress-btn" class="reset-question-btn">Reset Progress</button>
-                <span class="hint-icon" tabindex="0" onclick="showHint(${currentIndex})" title="I need a hint"><span style="color:#fff;">&#x2753;</span></span>
-            </div>
+        <div class="button-hint-row">
+            <button id="checkin-btn-${currentIndex}">Check In</button>
+            <span class="hint-tooltip">
+                <span class="hint-icon" tabindex="0" title="I need a hint">&#x2753;</span>
+            </span>
         </div>
-
         <div id="coords-section-${currentIndex}" class="coords-section" style="display:none;">
             <div class="clue-coords-inline">
                 <span id="your-coords" class="your-coords-inline"></span>
@@ -206,6 +302,19 @@ function renderLocations() {
         <p id="hint-${currentIndex}" style="display:none;"><strong>Location:</strong> ${loc.stampLocation}</p>
     `;
     container.appendChild(div);
+    // Attach event listeners for check-in and hint
+    document.getElementById(`checkin-btn-${currentIndex}`).onclick = function() { checkIn(currentIndex); };
+    document.querySelector(`#locations .hint-icon`).onclick = function() { showHint(currentIndex); };
+    // Render the Next button only if answered
+    const nextDiv = document.getElementById(`next-section-${currentIndex}`);
+    if (nextDiv) {
+        nextDiv.innerHTML = '';
+        if (loc.answered) {
+            let nextText = '<div class="next-section-message">Great job! You have completed this clue.  Ready for the next one?</div>';
+            nextText += `<button class="next-btn" onclick="window.nextClue(${currentIndex})">Next</button>`;
+            nextDiv.innerHTML = nextText;
+        }
+    }
 }
 
 // Show or update the visual distance indicator
@@ -318,37 +427,17 @@ function checkIn(index) {
         let msg = '<span style="color:green;">🎉 Success! You found the location.</span>';
         const resultDiv = document.getElementById(`checkin-result-${index}`);
         if (resultDiv) resultDiv.innerHTML = msg;
-        // Mark as answered
+        // Mark as answered and re-render
         locations[index].answered = true;
         saveProgress();
-        // Disable Check In button until Next is clicked
-        const checkinBtn = document.getElementById(`checkin-btn-${index}`);
-        if (checkinBtn) {
-            checkinBtn.disabled = true;
-            checkinBtn.classList.add('disabled');
-        }
         renderLocations();
 
 
 
 
         
-        // Calculate Queenie blur based on answered clues
-        const totalClues = locations.length;
-        const completedClues = locations.filter(l => l.answered).length;
-        let queenieBlur = 18;
-        if (completedClues > 0) {
-            queenieBlur = 18 - Math.floor((completedClues) * (18 / totalClues));
-            if (queenieBlur < 0) queenieBlur = 0;
-        }
-        let nextText = `
-            <div class="next-section-message">Great job! You have completed this clue.<br>Have you figured out which animal was roaming our streets? Ready for the next one?</div>
-            <div class="queenie-far-right" style="margin-top:1em;">
-                <img src="img/Queenie.png" alt="Secret animal" class="blurred-image" style="width:140px;height:120px;filter: blur(${queenieBlur}px);" />
-                <span style="margin-top:0.4em;font-size:1.1em;font-weight:bold;color:#217dbb;text-align:center;display:block;">Who am I?</span>
-            </div>
-            <button class="next-btn" onclick="window.nextClue(${index})">Next</button>
-        `;
+        let nextText = '<div class="next-section-message">Great job! You have completed this clue.<br>Have you figured out which animal was roaming our streets? Ready for the next one?</div>';
+        nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
         const nextDiv = document.getElementById(`next-section-${index}`);
         if (nextDiv) nextDiv.innerHTML = nextText;
         hideDistanceIndicator();
@@ -428,29 +517,10 @@ function checkIn(index) {
             if (success) {
                 locations[index].answered = true;
                 saveProgress();
-                // Disable Check In button until Next is clicked
-                const checkinBtn = document.getElementById(`checkin-btn-${index}`);
-                if (checkinBtn) {
-                    checkinBtn.disabled = true;
-                    checkinBtn.classList.add('disabled');
-                }
                 renderLocations();
-                // Calculate Queenie blur based on answered clues
-                const totalClues = locations.length;
-                const completedClues = locations.filter(l => l.answered).length;
-                let queenieBlur = 18;
-                if (completedClues > 0) {
-                    queenieBlur = 18 - Math.floor((completedClues) * (18 / totalClues));
-                    if (queenieBlur < 0) queenieBlur = 0;
-                }
-                let nextText = `
-                    <div class="next-section-message">Great job! You have completed this clue.<br>Have you figured out which animal was roaming our streets? Ready for the next one?</div>
-                    <div class="queenie-far-right" style="margin-top:1em;">
-                        <img src="img/Queenie.png" alt="Secret animal" class="blurred-image" style="width:140px;height:120px;filter: blur(${queenieBlur}px);" />
-                        <span style="margin-top:0.4em;font-size:1.1em;font-weight:bold;color:#217dbb;text-align:center;display:block;">Who am I?</span>
-                    </div>
-                    <button class="next-btn" onclick="window.nextClue(${index})">Next</button>
-                `;
+                // Show the Next button and congratulatory message (same as test mode)
+                let nextText = '<div class="next-section-message">Great job! You have completed this clue.<br>Have you figured out which animal was roaming our streets? Ready for the next one?</div>';
+                nextText += `<button class="next-btn" onclick="window.nextClue(${index})">Next</button>`;
                 const nextDiv = document.getElementById(`next-section-${index}`);
                 if (nextDiv) nextDiv.innerHTML = nextText;
                 hideDistanceIndicator();
@@ -496,21 +566,6 @@ function nextClue(index) {
         locations[unlockIdx].unlocked = true;
     }
     saveProgress();
-    // Re-enable Check In button for the new current question
-    setTimeout(() => {
-        let currentIndex = 0;
-        for (let i = 0; i < locations.length; i++) {
-            if (locations[i].unlocked) {
-                currentIndex = i;
-                break;
-            }
-        }
-        const checkinBtn = document.getElementById(`checkin-btn-${currentIndex}`);
-        if (checkinBtn) {
-            checkinBtn.disabled = false;
-            checkinBtn.classList.remove('disabled');
-        }
-    }, 0);
     renderLocations();
 }
 window.nextClue = nextClue;
