@@ -19,8 +19,8 @@
             </div>
             <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
             <div style="margin:1.5em 0 1em 0;font-weight:bold;">Would you like to try?</div>
-            <button id="start-hunt-btn" style="font-size:1.1em;padding:0.5em 1.5em;">Yes</button>
-        </div>
+            <button id="start-hunt-btn" style="font-size:1.1em;padding:0.5em 1.5em;background:#27ae60;color:#fff;border:none;border-radius:6px;">Yes</button>
+            <button id="close-page-btn" style="font-size:1.1em;padding:0.5em 1.5em;margin-left:1em;background:#e74c3c;color:#fff;border:none;border-radius:6px;">Close</button>
         </div>
     </main>
     <script>
@@ -29,6 +29,12 @@
         if (btn) {
             btn.onclick = function() {
                 window.location.href = 'game.html';
+            };
+        }
+        var closeBtn = document.getElementById('close-page-btn');
+        if (closeBtn) {
+            closeBtn.onclick = function() {
+                window.close();
             };
         }
     });
