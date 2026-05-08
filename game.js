@@ -1,3 +1,17 @@
+// Update the blur of the Queenie image in the header based on progress
+function updateHeaderQueenieBlur() {
+    const img = document.querySelector('.header-queenie-img');
+    if (!img) return;
+    const totalClues = locations.length;
+    const completedClues = locations.filter(l => l.answered).length;
+    let queenieBlur = 18;
+    if (completedClues > 0) {
+        queenieBlur = 18 - Math.floor((completedClues) * (18 / totalClues));
+        if (queenieBlur < 0) queenieBlur = 0;
+    }
+    img.style.filter = `blur(${queenieBlur}px)`;
+    img.style.webkitFilter = `blur(${queenieBlur}px)`;
+}
 // Scavenger Hunt Game Logic
 
 const locations = [
@@ -124,22 +138,41 @@ function renderLocations() {
     container.innerHTML = `<div class="game-intro" style="display:flex;align-items:center;gap:2em;">
         <div style="flex:1 1 0;min-width:0;">
             <label style="display:inline-flex;align-items:center;margin-top:0.5em;gap:0.5em;"></label>
-            <!-- TEST MODE BUTTON: Remove or comment out for production -->
-            <button id="test-mode-btn" style="margin-left:1em;">Enable Test Mode</button>
+            <!-- TEST MODE BUTTON: Only show if debug flag is set -->
+            <button id="test-mode-btn" style="margin-left:1em;display:none;">Enable Test Mode</button>
             <label id="test-mode-label" style="display:none;margin-left:1em;font-weight:bold;">
                 <input type="checkbox" id="test-mode-checkbox"> Test Mode: Instantly check in
             </label>
         </div>
     </div>`;
+    // Update header Queenie blur on every render
+    updateHeaderQueenieBlur();
+    // Show test mode button only if debug flag is set
+    setTimeout(() => {
+        if (localStorage.getItem('debug') === '1') {
+            const testBtn = document.getElementById('test-mode-btn');
+            if (testBtn) testBtn.style.display = '';
+        }
+    }, 0);
     // Add event listener for reset button
     setTimeout(() => {
+        // Footer Reset Button
         const resetBtn = document.getElementById('reset-progress-btn');
         if (resetBtn) {
             resetBtn.onclick = () => {
-                localStorage.removeItem('scavengerHuntProgress');
-                localStorage.removeItem('scavengerHuntAnswers');
-                loadProgress();
-                renderLocations();
+                if (confirm('Are you sure you want to reset your progress? You will need to start all over.')) {
+                    localStorage.removeItem('scavengerHuntProgress');
+                    localStorage.removeItem('scavengerHuntAnswers');
+                    loadProgress();
+                    renderLocations();
+                }
+            };
+        }
+        // Footer Hint Button
+        const hintBtn = document.getElementById('footer-hint-icon');
+        if (hintBtn) {
+            hintBtn.onclick = () => {
+                showHint(currentIndex);
             };
         }
         // TEST MODE BUTTON LOGIC: Remove or comment out for production
@@ -170,6 +203,38 @@ function renderLocations() {
     // Queenie image is now only shown in the congratulations/next section, not here
     let queenieBlur = blurPx;
     let queenieImgHtml = '';
+    let nextSectionHtml = '';
+    // Prepare date string for prize message
+    let dateStr = '';
+    if (loc.name === "Madison Park Pavillion" && loc.answered) {
+        const dateObj = new Date();
+        const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const day = days[dateObj.getDay()];
+        const month = months[dateObj.getMonth()];
+        const date = dateObj.getDate();
+        function ordinal(n) {
+            if (n > 3 && n < 21) return n + 'th';
+            switch (n % 10) {
+                case 1: return n + "st";
+                case 2: return n + "nd";
+                case 3: return n + "rd";
+                default: return n + "th";
+            }
+        }
+        dateStr = `${day} ${month} ${ordinal(date)}`;
+    }
+    if (loc.answered) {
+        if (loc.name === "Madison Park Pavillion") {
+            nextSectionHtml = `
+                <div class="next-section-message">You did it! Congratulations. You have discovered the <b>mysterious</b> animal. Click <b>NEXT</b> to learn more about Queenie and claim your prize.</div>
+            `;
+        } else {
+            nextSectionHtml = `
+                <div class="next-section-message">Great job! You have completed this clue.<br>Have you figured out which animal was roaming our streets? Ready for the next one?</div>
+            `;
+        }
+    }
     div.innerHTML = `
         <div class="question-title" style="background: linear-gradient(90deg, #3498db 0%, #217dbb 100%); color: #fff;"><h3 style="margin:0;">${loc.name}</h3></div>
         <div class="question-content-box">
@@ -183,18 +248,13 @@ function renderLocations() {
                 <div class="question-main" style="display:flex;align-items:center;">
                     <p style="margin-right:1em;">${loc.description}</p>
                 </div>
-                <div class="queenie-image-container" style="display:inline-block;vertical-align:middle;margin-left:1em;">${queenieImgHtml}</div>
             </div>
             ${loc.answered ? `<div class="answer-row"><p class="answer-paragraph">${loc.answer}</p></div>` : ''}
         </div>
         <div class="button-hint-row uniform-btn-row">
             <button id="checkin-btn-${currentIndex}" class="checkin-btn${loc.answered ? ' disabled' : ''}" onclick="checkIn(${currentIndex})"${loc.answered ? ' disabled' : ''}>Check In</button>
-            <div class="right-btn-group">
-                <button id="reset-progress-btn" class="reset-question-btn">Reset Progress</button>
-                <span class="hint-icon" tabindex="0" onclick="showHint(${currentIndex})" title="I need a hint"><span style="color:#fff;">&#x2753;</span></span>
-            </div>
+            <button id="next-btn-${currentIndex}" class="next-btn" onclick="window.nextClue(${currentIndex})"${loc.answered ? '' : ' disabled style="opacity:0.6;cursor:not-allowed;"'}>Next</button>
         </div>
-
         <div id="coords-section-${currentIndex}" class="coords-section" style="display:none;">
             <div class="clue-coords-inline">
                 <span id="your-coords" class="your-coords-inline"></span>
@@ -202,9 +262,22 @@ function renderLocations() {
         </div>
         <div id="checkin-result-${currentIndex}" class="checkin-result"></div>
         <div id="answer-section-${currentIndex}" class="answer-section"></div>
-        <div id="next-section-${currentIndex}"></div>
+        <div id="next-section-${currentIndex}">${nextSectionHtml}</div>
         <p id="hint-${currentIndex}" style="display:none;"><strong>Location:</strong> ${loc.stampLocation}</p>
     `;
+    // Ensure Check In button is enabled if not answered (handles page refresh)
+    setTimeout(() => {
+        const checkinBtn = document.getElementById(`checkin-btn-${currentIndex}`);
+        if (checkinBtn) {
+            if (!loc.answered) {
+                checkinBtn.disabled = false;
+                checkinBtn.classList.remove('disabled');
+            } else {
+                checkinBtn.disabled = true;
+                checkinBtn.classList.add('disabled');
+            }
+        }
+    }, 0);
     container.appendChild(div);
 }
 
@@ -215,7 +288,12 @@ function updateDistanceIndicator(distance, maxDistance = 500) {
     const label = document.getElementById('distance-indicator-label');
     const gpsCoords = document.getElementById('gps-coords');
     if (!container || !canvas || !label || !gpsCoords) return;
-    container.style.display = 'block';
+    container.style.display = 'flex';
+    container.style.alignItems = 'center';
+    canvas.style.display = 'inline-block';
+    label.style.display = 'inline-block';
+    label.style.marginLeft = '1.5em';
+    label.style.marginTop = '0';
     // Clamp maxDistance to a minimum of 50m for usability
     maxDistance = Math.max(maxDistance, 50);
 
@@ -288,7 +366,7 @@ function updateDistanceIndicator(distance, maxDistance = 500) {
     if (distance < 1) {
         label.textContent = 'You are here!';
     } else {
-        label.textContent = `${Math.round(distance)} meters away`;
+        label.textContent = `You are ${Math.round(distance)} meters away`;
     }
     // Show GPS coords if available
     if (typeof userLat === 'number' && typeof userLng === 'number') {
@@ -328,6 +406,7 @@ function checkIn(index) {
             checkinBtn.classList.add('disabled');
         }
         renderLocations();
+        updateHeaderQueenieBlur();
 
 
 
@@ -343,11 +422,8 @@ function checkIn(index) {
         }
         let nextText = `
             <div class="next-section-message">Great job! You have completed this clue.<br>Have you figured out which animal was roaming our streets? Ready for the next one?</div>
-            <div class="queenie-far-right" style="margin-top:1em;">
-                <img src="img/Queenie.png" alt="Secret animal" class="blurred-image" style="width:140px;height:120px;filter: blur(${queenieBlur}px);" />
-                <span style="margin-top:0.4em;font-size:1.1em;font-weight:bold;color:#217dbb;text-align:center;display:block;">Who am I?</span>
-            </div>
-            <button class="next-btn" onclick="window.nextClue(${index})">Next</button>
+
+ 
         `;
         const nextDiv = document.getElementById(`next-section-${index}`);
         if (nextDiv) nextDiv.innerHTML = nextText;
@@ -415,15 +491,23 @@ function checkIn(index) {
                 };
                 let icon = directionIcons[direction] || '';
                 let extraHint = directionHints[direction] ? directionHints[direction] : '';
+                
                 if (["NE","SE","SW","NW"].includes(direction)) {
-                    msg += `<span style=\"color:red;\">Not quite there yet. Try getting closer!<br>Distance: ${Math.round(distance)} meters. <b>${icon}</b> ${extraHint}</span>`;
+                    msg += `<span style="color:red;">Not quite there yet. Try getting closer!<br>Distance: ${Math.round(distance)} meters. <b>${icon}</b> ${extraHint}</span>`;
                 } else {
-                    msg += `<span style=\"color:red;\">Not quite there yet. Try getting closer!<br>Distance: ${Math.round(distance)} meters. ${extraHint}</span>`;
+                     msg+= `<span style="color:red;">Not quite there yet. Try getting closer!<br>Distance: ${Math.round(distance)} meters. ${extraHint}</span>`;
                 }
             }
-            // Show result below the button
+            // Show result to the right of the grid
             const resultDiv = document.getElementById(`checkin-result-${index}`);
-            if (resultDiv) resultDiv.innerHTML = msg;
+            if (resultDiv) {
+                resultDiv.innerHTML = msg;
+                resultDiv.style.display = 'inline-block';
+                resultDiv.style.verticalAlign = 'middle';
+                resultDiv.style.marginLeft = '1.5em';
+                resultDiv.style.marginTop = '0';
+                resultDiv.style.position = 'relative';
+            }
             // On success, insert answer as its own row inside .question-content-box, after .question-row
             if (success) {
                 locations[index].answered = true;
@@ -498,6 +582,7 @@ function nextClue(index) {
     saveProgress();
     // Re-enable Check In button for the new current question
     setTimeout(() => {
+        updateHeaderQueenieBlur();
         let currentIndex = 0;
         for (let i = 0; i < locations.length; i++) {
             if (locations[i].unlocked) {

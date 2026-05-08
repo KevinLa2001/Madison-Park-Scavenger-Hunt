@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Madison Park Historical Timeline</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Madison Park Scavenger Hunt!</h1>
+    </header>
+    <main>
+        <div style="max-width:600px;margin:2em auto;padding:2em;background:#fafdff;border-radius:12px;box-shadow:0 2px 12px #0001;">
+            <p>Madison Park has a fascinating history—full of surprises, fun, and a few secrets! For example, did you know that once an exotic animal roamed our streets? Can you guess what it was?</p>
+            <div style="display:flex;align-items:center;gap:1.5em;margin:1em 0 1em 0;">
+                <em style="margin:0;">To find out what it is, you must finish this scavenger hunt and we will reveal the secret!</em>
+                <img src="img/Queenie.png" alt="Secret animal" width="80" height="68" style="filter: blur(18px); -webkit-filter: blur(18px); pointer-events:none; user-select:none; background:#fff; border:4px solid #217dbb; border-radius:12px; box-shadow:0 2px 8px #0002;" />
+            </div>
+            <p>Explore Madison Park's history by visiting real locations. At each stop, check in with your phone's GPS to unlock the next clue. Use the hint if you need help finding the spot. Good luck and have fun!</p>
+            <div style="margin:1.5em 0 1em 0;font-weight:bold;">Would you like to try?</div>
+            <button id="start-hunt-btn" style="font-size:1.1em;padding:0.5em 1.5em;">Yes</button>
+        </div>
+        </div>
+    </main>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('start-hunt-btn');
+        if (btn) {
+            btn.onclick = function() {
+                window.location.href = 'game.html';
+            };
+        }
+    });
+    </script>    </main>
+
+</body>
+</html>

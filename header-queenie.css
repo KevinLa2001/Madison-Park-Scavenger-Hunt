@@ -1,0 +1,38 @@
+/* Queenie image in header, right-justified */
+.header-queenie-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.header-queenie-title {
+    font-size: 2.1em;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+    flex: 1;
+}
+.header-queenie-img {
+    width: 90px;
+    height: 75px;
+    filter: blur(18px);
+    -webkit-filter: blur(18px);
+    margin-left: 1.5em;
+    border-radius: 12px;
+    background: #fff;
+    border: 2px solid #217dbb;
+    box-shadow: 0 2px 8px #0002;
+    pointer-events: none;
+    user-select: none;
+    display: block;
+}
+@media (max-width: 600px) {
+    .header-queenie-img {
+        width: 60px;
+        height: 50px;
+        margin-left: 0.7em;
+    }
+    .header-queenie-title {
+        font-size: 1.2em;
+    }
+}

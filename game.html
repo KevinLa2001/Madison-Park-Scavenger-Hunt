@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Madison Park Scavenger Hunt Game</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="header-queenie.css">
 </head>
 <body>
     <header>
-        <h1>Madison Park Scavenger Hunt</h1>
+        <div class="header-queenie-container">
+            <span class="header-queenie-title">Madison Park Scavenger Hunt</span>
+            <img class="header-queenie-img" src="img/Queenie.png" alt="Secret animal" />
+        </div>
         <p>Explore Madison Park's history! Visit each location, check in, and unlock the next clue.</p>
     </header>
     <main id="game">
@@ -18,10 +22,6 @@
                 <div class="compass-queenie-flex align-left" style="flex:1;">
                     <canvas id="crosshairs-canvas" width="140" height="140" style="border:1px solid #888;background:#fafdff;"></canvas>
                 </div>
-                <div class="queenie-far-right">
-                    <img id="queenie-blur-img" src="img/Queenie.png" alt="Secret animal" class="blurred-image" style="width:140px;height:120px;filter: blur(18px);" />
-                    <span style="margin-top:0.4em;font-size:1.1em;font-weight:bold;color:#217dbb;text-align:center;display:block;">Who am I?</span>
-                </div>
             </div>
             <div class="compass-labels-under" style="display:flex;flex-direction:column;align-items:flex-start;margin-left:0.2em;margin-top:0.5em;">
                 <span id="distance-indicator-label" style="min-width:120px;display:inline-block;"></span>
@@ -29,6 +29,10 @@
             </div>
         </div>
     </main>
+        <footer>
+            <button id="reset-progress-btn" class="reset-question-btn">Reset Progress</button>
+            <span class="hint-icon" id="footer-hint-icon" tabindex="0" title="I need a hint"><span style="color:#fff;">&#x2753;</span></span>
+        </footer>
     <script src="game.js"></script>
 </body>
 </html>

@@ -11,10 +11,28 @@
         <h1>Queenie the Elephant</h1>
         <img src="img/queenie.png" alt="Queenie the Elephant" style="max-width:350px;width:90vw;border-radius:12px;box-shadow:0 2px 12px #888;margin:1.5em 0;">
         <div id="queenie-text" style="font-size:1.2em;max-width:600px;text-align:center;margin-bottom:2em;"></div>
-        <div style="font-size:1.3em;font-weight:bold;color:#217dbb;margin-top:2em;">You won! Show this photo to the Friends of Madison Park table at the farmer's market for a prize.</div>
+        <div id="prize-message" style="font-size:1.3em;font-weight:bold;color:#217dbb;margin-top:2em;"></div>
     </main>
     <script>
-    document.getElementById('queenie-text').innerHTML = `Queenie was a working Asian elephant who performed as part of the traveling animal attractions brought into Seattle’s White City amusement park in 1909. Normally steady and obedient under her primary trainer, Bernard Dooley, she was a familiar feature of the park’s menagerie—used for demonstrations, light labor, and drawing crowds to the new Madison Park attraction. Her brief moment of fame came on May 28, 1909, when two small white dogs startled her during a routine move, triggering the chaotic chase that became one of the most memorable episodes in early Madison Park history. <br><br><a href="https://pauldorpat.com/2011/08/13/seattle-madison-park-elephant-escape/" target="_blank" rel="noopener">Read more about Queenie’s escape</a>.`;
+    document.getElementById('queenie-text').innerHTML = `Queenie was a working Asian elephant who performed as part of the traveling animal attractions brought into Seattle’s White City amusement park in 1909. Normally steady and obedient under her primary trainer, Bernard Dooley, she was a familiar feature of the park’s menagerie—used for demonstrations, light labor, and drawing crowds to the new Madison Park attraction. Her brief moment of fame came on May 28, 1909, when two small white dogs startled her during a routine move, triggering the chaotic chase that became one of the most memorable episodes in early Madison Park history. <br><br><a href="https://www.historylink.org/File/7652" target="_blank" rel="noopener">Read more about Queenie’s escape</a>.`;
+    // Add completion date to prize message
+    function ordinal(n) {
+        if (n > 3 && n < 21) return n + 'th';
+        switch (n % 10) {
+            case 1: return n + "st";
+            case 2: return n + "nd";
+            case 3: return n + "rd";
+            default: return n + "th";
+        }
+    }
+    const dateObj = new Date();
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const day = days[dateObj.getDay()];
+    const month = months[dateObj.getMonth()];
+    const date = dateObj.getDate();
+    const dateStr = `${day} ${month} ${ordinal(date)}`;
+    document.getElementById('prize-message').innerHTML = `You won! Show this photo to the Friends of Madison Park table at the farmer's market for a prize.<br><span style="font-size:1.1em;">Completed on: ${dateStr}</span>`;
     </script>
 </body>
 </html>
