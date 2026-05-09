@@ -1,9 +1,60 @@
 /* Queenie image in header, right-justified */
+
 .header-queenie-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+}
+
+.header-queenie-cell-wrapper {
+    position: absolute;
+    right: 2.5em;
+    bottom: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+}
+
+header {
+    position: relative;
+    min-height: 160px;
+}
+
+.header-queenie-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #eaf6fb;
+    border: 1px solid #217dbb;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px #0001;
+    padding: 0.3em 0.7em 0.5em 0.7em;
+    margin-left: 1.2em;
+    min-width: 100px;
+    min-height: 100px;
+    max-height: 120px;
+}
+
+
+
+.whoami-title {
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    color: #217dbb;
+    background: #fff;
+    padding: 0.12em 0.7em 0.12em 0.7em;
+    border-radius: 6px;
+    margin-top: 0.4em;
+    box-shadow: 0 1px 4px #0001;
+}
+
+header {
+    position: relative;
+    min-height: 120px;
 }
 .header-queenie-title {
     font-size: 2.1em;

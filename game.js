@@ -65,7 +65,7 @@ const locations = [
         stampLocation: "Next to the kids play structure",
         specific: "Somewhere on the structure",
         description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows.  Can you find a structure in the park that resembles the picture? You will need to stand near it.",
-        lat: 47.6362,
+        lat: 47.6355,
         lng: -122.2778,
         unlocked: false,
         answer: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows during its peak in the 1890s and 1910s. After the 1917 lake level drop, its use declined as the resort era faded.",
