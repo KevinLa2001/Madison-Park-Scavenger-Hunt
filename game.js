@@ -56,7 +56,7 @@ const locations = [
         lat: 47.6346,
         lng: -122.2775,
         unlocked: false,
-        answer: "Built in 1910 by the Pioneer Association, Pioneer Hall has been a cornerstone of Madison Park's community life. From the 1910s to the present, it has hosted meetings, events, and now serves as the home for the Madison Park Community Council, fostering local engagement and history.",
+        answer: "Built in 1910 by the Pioneer Association, Pioneer Hall has been a cornerstone of Madison Park's community life. From the 1910s to the present, it has hosted meetings, events, and once served as the home for the Madison Park Community Council, fostering local engagement and history. /n Fun Fact:  Madison Park Community Council became Friends of Madison Park. The group who organized this scavenger hunt.",
         image: "https://wapioneers.com/upload/rotator/Home_Image_Landscape/rsz_pioneer_hall_se_view.jpg"
 
     },
@@ -64,7 +64,7 @@ const locations = [
         name: "Madison Park Pavillion",
         stampLocation: "Next to the kids play structure",
         specific: "Somewhere on the structure",
-        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows.  Can you find a structure in the park that resembles the picture? You will need to stand near it.",
+        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows.  Can you find a big circle in the park that might have been where the pavillion was located? You will need to stand in the center.",
         lat: 47.6355,
         lng: -122.2778,
         unlocked: false,
