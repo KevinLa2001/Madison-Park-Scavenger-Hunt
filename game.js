@@ -17,7 +17,7 @@ function updateHeaderQueenieBlur() {
 const locations = [
     {
         name: "Mosquito fleet",
-        stampLocation: "Middle of the dock",
+        stampLocation: "Near the dock on Madison. Patience: sometimes GPS can be slow to update. Wait a miniute and refresh and check location again.",
         specific: "tbd",
         description: "From 1890 to 1910, Madison Park was a key stop for the Mosquito Fleet steamboats supplying Lake Washington. \nCan you figure out where they started from? \nHint: Look for a dock.",
         lat: 47.6366,
@@ -28,18 +28,18 @@ const locations = [
     },
     {
         name: "Cable Car",
-        stampLocation: "Next to the Madison Park Beach Rainbow sign",
+        stampLocation: "Next to the Madison Park Beach Rainbow sign. Patience: sometimes GPS can be slow to update. Wait a miniute and refresh and check location again.",
         specific: "On back of rainbow sign",
         description: "Cable cars began serving Madison Park in 1890, and the end of the line was at the end of Madison Street, right near the beach. Can you find the rainbow sign and picture yourself waiting for the cable car?",
         lat: 47.6365,
         lng: -122.2773,
         unlocked: false,
-        answer: "Cable cars began serving Madison Park in 1890, running from downtown Seattle to the lakefront. The full line operated until around 1910, when service was truncated to 21st Avenue, no longer reaching the park. This transportation innovation helped develop the area as a residential and recreational hub. \n \nFun fact: Did you know that Madison street is the only street that runs from Puget Sound to Lake Washington?",
+        answer: "Cable cars began serving Madison Park in 1890, running from downtown Seattle to the lakefront. The full line operated until around 1910, when service was truncated to 21st Avenue, no longer reaching the park. This transportation innovation helped develop the area as a residential and recreational hub. \n \nFun fact: Did you know that Madison street is the only street that runs from Puget Sound to Lake Washington? </p> Fun fact: The cobblestones around the sign are reclaimed from Seattle streets. Cobblestone streets in Seattle were put in between the late 1800s and early 1900s (roughly 1890–1915). ",
         image: "https://i0.wp.com/pauldorpat.com/wp-content/uploads/2013/12/5-madison-park-trolley-at-madison-park-a-profile-with-part-of-castleweb1.jpg"
     },
     {
         name: "Bathhouse",
-        stampLocation: "Next to the front door of the Bathhouse",
+        stampLocation: "Next to the front door of the Bathhouse. Patience: sometimes GPS can be slow to update. Wait a miniute and refresh and check location again.",
         specific: "tbd",
         description: "Around 1900-1910, a bathing pavilion and fountain were built at Madison Park. Locate the bathhouse front door to unlock this clue.",
         lat: 47.6362,
@@ -50,21 +50,21 @@ const locations = [
     },
     {
         name: "Pioneer hall",
-        stampLocation: "Next to the front door of the Pioneer hall",
+        stampLocation: "Next to the front door of the Pioneer hall. Patience: sometimes GPS can be slow to update. Wait a miniute and refresh and check location again.",
         specific: "tbd",
         description: "The Pioneer building is an old brick building in Madison Park. Do you know where it is? \nHint: It's not the bathhouse. Go to the front door to unlock this clue.",
         lat: 47.6346,
         lng: -122.2775,
         unlocked: false,
-        answer: "Built in 1910 by the Pioneer Association, Pioneer Hall has been a cornerstone of Madison Park's community life. From the 1910s to the present, it has hosted meetings, events, and once served as the home for the Madison Park Community Council, fostering local engagement and history. /n Fun Fact:  Madison Park Community Council became Friends of Madison Park. The group who organized this scavenger hunt.",
+        answer: "Built in 1910 by the Pioneer Association, Pioneer Hall has been a cornerstone of Madison Park's community life. From the 1910s to the present, it has hosted meetings, events, and once served as the home for the Madison Park Community Council, fostering local engagement and history. </p> Fun Fact:  Madison Park Community Council became Friends of Madison Park. The group who organized this scavenger hunt.",
         image: "https://wapioneers.com/upload/rotator/Home_Image_Landscape/rsz_pioneer_hall_se_view.jpg"
 
     },
     {
         name: "Madison Park Pavillion",
-        stampLocation: "Next to the kids play structure",
+        stampLocation: "This one is a little tough. Next to the kids play structure. Patience: sometimes GPS can be slow to update. Wait a miniute and refresh and check location again.",
         specific: "Somewhere on the structure",
-        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows.  Can you find a big circle in the park that might have been where the pavillion was located? You will need to stand in the center.",
+        description: "Constructed in the 1890s as part of the amusement complex, the pavilion hosted dances, concerts, and theatrical shows. Where the pavilion once stood, there is now a kids play structure. Go to the kids park to unlock this final clue.",
         lat: 47.6355,
         lng: -122.2778,
         unlocked: false,
